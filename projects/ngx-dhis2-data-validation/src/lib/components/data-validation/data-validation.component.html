@@ -1,0 +1,26 @@
+<div *ngIf="!isTableObjectsListCreated">
+  <div
+    style="height: 30px; padding: 5px;"
+    class="row"
+    *ngFor="let row of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+  >
+    <div
+      class="col-1"
+      style="padding: 2px !important"
+      *ngFor="let col of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+    >
+      <app-loader></app-loader>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="dataElementsAnalyticsData$ | async">
+  <app-data-quality-table
+    [periods]="analyticsPeriods"
+    [dataElementsAnalyticsData]="dataElementsAnalyticsData$ | async"
+    [tableObjectsList]="tableObjectsList"
+    [selectedTableObject]="selectedTableObject"
+    [isTableObjectsListCreated]="isTableObjectsListCreated"
+    [activeTableItem]="activeTableItem"
+  ></app-data-quality-table>
+</div>

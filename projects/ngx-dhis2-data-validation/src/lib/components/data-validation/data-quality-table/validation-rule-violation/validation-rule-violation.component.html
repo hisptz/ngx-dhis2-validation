@@ -1,0 +1,61 @@
+<div class="violations" *ngIf="tableColumns && tableRows">
+  <div class="header">
+    <div class="header-left">
+      <h3>
+        Validation rule<span *ngIf="possibleViolatedRules.length > 1">s</span>
+        violation at {{ selectedOuForViolations.name }}
+      </h3>
+    </div>
+    <div class="header-right">
+      <button class="btn" (click)="unSetModal($event)" title="Close">
+        Close
+      </button>
+    </div>
+  </div>
+  <div style="max-height: 400px;overflow-y: auto; width: 100%;display: block;">
+    <table
+      style="margin-top: 10px;"
+      class="table table-bordered table-condensed custom-table"
+      #table
+      *ngFor="let rule of possibleViolatedRules"
+    >
+      <thead style="background-color: #dedcdc;">
+        <tr>
+          <th rowspan="2">
+            Validation rule
+          </th>
+          <th [attr.colspan]="tableColumns[rule.id].leftColumns.length">
+            Left side ({{ rule.leftSide.description }})
+          </th>
+          <th>Operator</th>
+          <th [attr.colspan]="tableColumns[rule.id].rightColumns.length">
+            Right side ({{ rule.rightSide.description }})
+          </th>
+        </tr>
+        <tr>
+          <th *ngFor="let item of tableColumns[rule.id].leftColumns">
+            <span>
+              {{ item }}
+            </span>
+          </th>
+          <th>{{ getOperator(rule) }}</th>
+          <th *ngFor="let item of tableColumns[rule.id].rightColumns">
+            <span>
+              {{ item }}
+            </span>
+          </th>
+        </tr>
+      </thead>
+      <tbody *ngIf="tableRows">
+        <tr>
+          <td>{{ rule.name }}</td>
+          <td *ngFor="let rowData of tableRows[rule.id].left">{{ rowData }}</td>
+          <td>{{ getOperator(rule) }}</td>
+          <td *ngFor="let rowData of tableRows[rule.id].right">
+            {{ rowData }}
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

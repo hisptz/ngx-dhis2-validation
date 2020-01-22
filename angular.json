@@ -3,9 +3,9 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "ngx-seed-app": {
+    "ngx-dhis2-validation": {
       "root": "",
-      "sourceRoot": "src",
+      "sourceRoot": "demo",
       "projectType": "application",
       "prefix": "app",
       "schematics": {},
@@ -13,21 +13,21 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/ngx-seed-app",
-            "index": "src/index.html",
-            "main": "src/main.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "outputPath": "dist/ngx-dhis2-validation",
+            "index": "demo/index.html",
+            "main": "demo/main.ts",
+            "polyfills": "demo/polyfills.ts",
+            "tsConfig": "demo/tsconfig.app.json",
             "assets": [
-              "src/favicon.ico",
-              "src/assets",
-              "src/manifest.webapp",
-              "src/manifest.json"
+              "demo/favicon.ico",
+              "demo/assets",
+              "demo/manifest.webapp",
+              "demo/manifest.json"
             ],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
               "node_modules/bootstrap/dist/css/bootstrap.css",
-              "src/styles.css"
+              "demo/styles.css"
             ],
             "scripts": []
           },
@@ -35,8 +35,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "demo/environments/environment.ts",
+                  "with": "demo/environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -55,47 +55,47 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ngx-seed-app:build",
+            "browserTarget": "ngx-dhis2-validation:build",
             "proxyConfig": "proxy-config.json"
           },
           "configurations": {
             "production": {
-              "browserTarget": "ngx-seed-app:build:production"
+              "browserTarget": "ngx-dhis2-validation:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "ngx-seed-app:build"
+            "browserTarget": "ngx-dhis2-validation:build"
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "src/test.ts",
-            "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
+            "main": "demo/test.ts",
+            "polyfills": "demo/polyfills.ts",
+            "tsConfig": "demo/tsconfig.spec.json",
+            "karmaConfig": "demo/karma.conf.js",
             "codeCoverage": true,
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles.css"
+              "demo/styles.css"
             ],
             "scripts": [],
-            "assets": ["src/favicon.ico", "src/assets", "src/manifest.json"]
+            "assets": ["demo/favicon.ico", "demo/assets", "demo/manifest.json"]
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": ["src/tsconfig.app.json", "src/tsconfig.spec.json"],
+            "tsConfig": ["demo/tsconfig.app.json", "demo/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**"]
           }
         }
       }
     },
-    "ngx-seed-app-e2e": {
+    "ngx-dhis2-validation-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -103,11 +103,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "ngx-seed-app:serve"
+            "devServerTarget": "ngx-dhis2-validation:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "ngx-seed-app:serve:production"
+              "devServerTarget": "ngx-dhis2-validation:serve:production"
             }
           }
         },
@@ -119,9 +119,42 @@
           }
         }
       }
+    },
+    "ngx-dhis2-data-validation": {
+      "projectType": "library",
+      "root": "projects/ngx-dhis2-data-validation",
+      "sourceRoot": "projects/ngx-dhis2-data-validation/src",
+      "prefix": "ngx",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/ngx-dhis2-data-validation/tsconfig.lib.json",
+            "project": "projects/ngx-dhis2-data-validation/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/ngx-dhis2-data-validation/src/test.ts",
+            "tsConfig": "projects/ngx-dhis2-data-validation/tsconfig.spec.json",
+            "karmaConfig": "projects/ngx-dhis2-data-validation/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/ngx-dhis2-data-validation/tsconfig.lib.json",
+              "projects/ngx-dhis2-data-validation/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
     }
   },
-  "defaultProject": "ngx-seed-app",
+  "defaultProject": "ngx-dhis2-validation",
   "cli": {
     "defaultCollection": "@ngrx/schematics"
   }

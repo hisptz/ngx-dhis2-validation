@@ -1,11 +1,13 @@
 {
-  "name": "ngx-seed-app",
-  "version": "0.0.0",
+  "name": "ngx-dhis2-validation",
+  "version": "1.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build --prod --aot && cd dist/ngx-seed-app && zip -r -D ngx-seed-app.zip .",
+    "build": "ng build",
     "test": "ng test",
+    "build-lib": "ng build ngx-dhis2-data-validation",
+    "publish": "npm run build-lib && cd dist/ngx-dhis2-data-validation && npm publish --access public && cd ../../",
     "test:travis": "ng test -- --no-watch --no-progress --code-coverage --browsers=ChromeHeadlessCI",
     "lint": "ng lint",
     "e2e": "ng e2e",
@@ -54,6 +56,7 @@
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.803.20",
+    "@angular-devkit/build-ng-packagr": "~0.803.20",
     "@angular/cli": "^8.3.20",
     "@angular/compiler-cli": "^8.2.14",
     "@angular/language-service": "^8.2.14",
@@ -73,9 +76,11 @@
     "karma-coverage-istanbul-reporter": "~2.1.1",
     "karma-jasmine": "~2.0.1",
     "karma-jasmine-html-reporter": "^1.4.2",
+    "ng-packagr": "^5.4.0",
     "ngrx-store-freeze": "^0.2.4",
     "protractor": "^5.4.2",
     "ts-node": "~8.5.4",
+    "tsickle": "^0.37.0",
     "tslint": "~5.20.1",
     "typescript": "^3.5.3"
   },

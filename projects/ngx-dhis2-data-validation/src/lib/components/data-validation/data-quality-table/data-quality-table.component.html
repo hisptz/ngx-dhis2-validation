@@ -1,0 +1,220 @@
+<div
+  class="data-quality-table"
+  *ngIf="tableObjectsList"
+  (click)="hideValidationModal()"
+>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" *ngFor="let pe of periods">
+      <a
+        class="nav-link"
+        [ngClass]="activeTableItem == pe ? 'active' : ''"
+        id="{{ pe }}-tab"
+        data-toggle="tab"
+        (click)="setActivePeriod(pe)"
+        role="tab"
+        aria-selected="false"
+        *ngIf="getFormatedDate(pe)"
+        style="cursor: pointer; font-size: 0.8rem;"
+      >
+        {{ getFormatedDate(pe).period }}
+        <span
+          *ngIf="
+            tableObjectsList[pe] &&
+            tableObjectsList[pe]['validationViolations'] &&
+            tableObjectsList[pe]['validationViolations'][
+              'violatedRulesCount'
+            ] == 0
+          "
+        >
+          <img
+            height="20px"
+            style="margin-top: -6px"
+            src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANrSURBVGhD7ZrLaxNRFMaz9i2+/iELwZnmzjQJLVRcuBCsXSiIutUarRt1IW5ciLSIjWSmhlIpiC8wRhPUpQVduLFFENuCrmzHcyZnUCbnZl53Ji7ywQ9KMvfc75t7586dSXMDDTRQdjJr5kHNMsu6ZVSAh8AL3TbaiGaL5/RZRZsvlPBYavZ/SNhij2YZk2CwBWyBaScUeKxlNLEt1qBy2Qs7ByPTYGSDNRoFy1gHKpkHgqlxTLfFN9ZUAuCkrGo1c5y6SU+F+cJOCDDLmVCLmC1XyzuoW7UafjR8CM7YO77jVGhjn9S9GuXnSgfgLC0znaWMWMa+yUYy0XT6wHeUAbAaKplmsP7fZzvIFDFDduKpszpxhbMn9mqmLWh74UwoX2LjgktzrPsM3uy4gmly+tVx50LrBPtdB3GF7IUTbTuS37EjgCGav687ra0bPcKItUijAiEm+ULp4IVoOzddAsJMkM1gwcFv+CLq8YfwuPXpLHs8rKKvyWZv4fYaro/wu9gEyELc/nzOGbZNtg0E2dTr+n6yK5f7PMEUUE2cEH8RRbIrF64MfGN1JAvhjsplsisXBKlyjVWRNAQCi9EDsisXXB8vucYco4tl5+jSGPsdh4oQCD42k125IMh7rrEfDPF4o+I8+TkdKoyqEAg+TpBdufAgrvG/eCE8M0FhVIZAQgUJM7XufDnfZUoW5kxDbQgk3NQKcbGXFoqO/f1ilzl/mDRCIGEv9grX2E9QmLRCIDAiU2RXrig3xE6YS11mn/66llqIDiFuiO7zeYQtiiyMH1UhcItiWMY+sttbEKTJFZERFEbdSLhBGmQzWHrNPMUV6YUsjMoQCFzoJ8lmsOh16DpXqBf+MCmE+BH5cReG8CpXLAgvjOoQCHgK3iz6RY+7q1zBIEbqReUhYKVayS/md5G9aMJXMHzRfiBGyVY8QYEZvnCGWMY9shNf+LoS5uZbtoMswFtBXd9GdpKpXy+x4Rr9qOwltid8xQ/F8fdAtlPV4CxQHsITTjMYmdR/6IGRuDu0NLSduk1PndVMrHAmkiG+Qu0x6iYb0d0ff4aOvAPoRqzBVJo6XC3vpvLZyw0EezMw0gA2eaPd4LHYBkJM9DUAJ3wDeMQyRvDsAnMwWs/AtPsPA/g3fobf4TGht+IDDTSQAuVyfwDdSxtBGQ/GPQAAAABJRU5ErkJggg=="
+          />
+        </span>
+        <span
+          style="color: #FFF;
+          font-size: 0.6rem;
+          padding: 2px 6px;
+          border-radius: 40px;
+          background-color: #ff4c17;"
+          *ngIf="
+            tableObjectsList[pe] &&
+            tableObjectsList[pe]['validationViolations'] &&
+            tableObjectsList[pe]['validationViolations']['violatedRulesCount'] >
+              0
+          "
+          >{{
+            tableObjectsList[pe]['validationViolations']['violatedRulesCount']
+          }}</span
+        >
+      </a>
+    </li>
+  </ul>
+
+  <div
+    class="tab-content"
+    id="myTabContent"
+    style="height: 430px; overflow: auto"
+  >
+    <div
+      class="tab-pane fade show"
+      *ngFor="let pe of periods"
+      [ngClass]="activeTableItem == pe ? 'active' : ''"
+      id="{{ pe }}"
+      role="tabpanel"
+    >
+      <div *ngIf="!isTableObjectsListCreated">
+        <div
+          style="height: 30px; padding: 5px;"
+          class="row"
+          *ngFor="let row of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+        >
+          <div
+            class="col-1"
+            style="padding: 2px !important"
+            *ngFor="let col of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]"
+          >
+            <app-loader></app-loader>
+          </div>
+        </div>
+        <div style="margin: 0 20px 0 20px">
+          <p>Identifying validation violations</p>
+        </div>
+      </div>
+      <div *ngIf="isTableObjectsListCreated">
+        <div class="table-item-container">
+          <div>
+            <h5
+              style="margin-top: 80px"
+              class="text-center"
+              *ngIf="
+                tableObjectsList[pe] && tableObjectsList[pe].rows.length == 0
+              "
+            >
+              No data to display
+            </h5>
+            <div
+              *ngIf="tableObjectsList[pe]"
+              style="padding: 3px; overflow: auto;"
+              id="table"
+            >
+              <table
+                class="table table-bordered table-responsive table-condensed custom-table"
+                #table
+                *ngIf="tableObjectsList[pe].rows.length != 0"
+              >
+                <thead>
+                  <tr class="header-column">
+                    <th style="width: 200px; text-align: left;">
+                      Org units/Data elements
+                    </th>
+                    <th
+                      *ngFor="
+                        let table_column of tableObjectsList[pe].titles.columns;
+                        let i = index
+                      "
+                      style="text-align: left; width: 180px;"
+                    >
+                      <span>{{ table_column.name }}</span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="myPivotTable">
+                  <tr
+                    *ngFor="
+                      let row of tableObjectsList[pe].rows;
+                      let rowIndex = index
+                    "
+                  >
+                    <td>
+                      {{ row.name }}
+                      <div style="float: right;">
+                        <span
+                          class="violation-bground"
+                          *ngIf="
+                            tableObjectsList[pe].numberOfRuleViolationsByOu &&
+                            tableObjectsList[pe].numberOfRuleViolationsByOu[
+                              row.id
+                            ]
+                          "
+                        >
+                          <svg viewbox="0 0 20 20" width="20" height="20">
+                            <polygon points="0 0 20 20" fill="#ff89a0" />
+                            <text fill="#000" x="8" y="10" font-size="11">
+                              {{
+                                tableObjectsList[pe].numberOfRuleViolationsByOu[
+                                  row.id
+                                ]
+                              }}
+                            </text>
+                          </svg>
+                        </span>
+                        <span
+                          class="inconstistance-bground"
+                          style="width: 20px;"
+                        >
+                          <svg
+                            viewbox="0 0 20 20"
+                            width="20"
+                            height="20"
+                            ng-if="indicator.values.length > 0"
+                          >
+                            <polygon points="0 0 20 20" fill="#e7ea31" />
+                          </svg>
+                        </span>
+                      </div>
+                    </td>
+                    <td
+                      *ngFor="
+                        let headerColumn of tableObjectsList[pe].titles.columns;
+                        let i = index
+                      "
+                      style="text-align: left;vertical-align: middle"
+                      (click)="
+                        showValidationStatus(
+                          tableObjectsList[pe].rowsData,
+                          headerColumn.id,
+                          tableObjectsList[pe].validationRules,
+                          pe,
+                          row,
+                          tableObjectsList[pe],
+                          tableObjectsList[pe]['validationViolations'][
+                            'violations'
+                          ][row.id + '-' + headerColumn.id + '-' + pe]
+                        )
+                      "
+                      [ngClass]="{
+                        'violation-bground':
+                          tableObjectsList[pe]['validationViolations'][
+                            'violations'
+                          ][row.id + '-' + headerColumn.id + '-' + pe] == 'fail'
+                      }"
+                    >
+                      {{
+                        tableObjectsList[pe]['rowsData'][
+                          row.id + '-' + headerColumn.id + '-' + pe
+                        ]
+                      }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="showValidationRuleViolations">
+  <app-validation-rule-violation
+    [allData]="selectedTableObject"
+    [selectedOuForViolations]="selectedOuForViolations"
+    [period]="activeTableItem"
+    (showValidationRuleViolationModal)="
+      showValidationRuleViolationModal($event)
+    "
+  ></app-validation-rule-violation>
+</div>
