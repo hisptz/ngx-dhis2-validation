@@ -9,6 +9,9 @@ import { LoaderComponent } from './containers/loader/loader.component';
 import { DataQualityTableComponent } from './components/data-validation/data-quality-table/data-quality-table.component';
 import { ValidationRuleViolationComponent } from './components/data-validation/data-quality-table/validation-rule-violation/validation-rule-violation.component';
 import { DataElementsAnalyticsEffects } from './store/effects/data-elements-analytics.effects';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { CheckDataLoadedEffects } from './store/effects/data-elements-loaded.effects';
+import { checkDataElementsDataLoadedReducer } from './store/reducers/dataelements-data-loaded.reducer';
 
 @NgModule({
   declarations: [
@@ -20,12 +23,20 @@ import { DataElementsAnalyticsEffects } from './store/effects/data-elements-anal
   imports: [
     CommonModule,
     FormsModule,
+    MatProgressBarModule,
     StoreModule.forFeature(
       'dataElementsAnalytics',
       dataElementsAnalyticsReducer
     ),
-    EffectsModule.forFeature([DataElementsAnalyticsEffects])
+    StoreModule.forFeature(
+      'loadedDataElementsData',
+      checkDataElementsDataLoadedReducer
+    ),
+    EffectsModule.forFeature([
+      DataElementsAnalyticsEffects,
+      CheckDataLoadedEffects
+    ])
   ],
-  exports: [DataValidationComponent]
+  exports: [DataValidationComponent, MatProgressBarModule]
 })
 export class NgxDhis2DataValidationModule {}

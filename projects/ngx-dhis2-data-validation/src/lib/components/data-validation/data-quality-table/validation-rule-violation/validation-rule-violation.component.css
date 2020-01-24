@@ -32,3 +32,8 @@
   height: 40px;
   position: relative;
 }
+
+.td,
+th {
+  font-size: 0.9rem;
+}

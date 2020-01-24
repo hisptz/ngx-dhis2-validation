@@ -3,10 +3,11 @@ import { DataAnalyticsService } from '../../services/data-analytics.service';
 import { createEffect, Actions, ofType } from '@ngrx/effects';
 import {
   getDataElementsAnalytics,
-  addLoadedDataElementsAnalytics
+  addLoadedDataElementsAnalytics,
+  loadingDataElementsDataFail
 } from '../actions';
-import { switchMap, mergeMap, map } from 'rxjs/operators';
-import { from } from 'rxjs';
+import { switchMap, mergeMap, map, catchError } from 'rxjs/operators';
+import { from, of } from 'rxjs';
 
 @Injectable()
 export class DataElementsAnalyticsEffects {
@@ -18,15 +19,6 @@ export class DataElementsAnalyticsEffects {
           mergeMap(dimension =>
             this.analyticsService.getDataElementsData(dimension).pipe(
               map((data: any) => {
-                console.log('dataaaaaaaaaaa', {
-                  id:
-                    dimension.indicatorId +
-                    '-' +
-                    dimension.parentOuId +
-                    '-' +
-                    dimension.period,
-                  data: data
-                });
                 return addLoadedDataElementsAnalytics({
                   data: {
                     id:
@@ -38,7 +30,8 @@ export class DataElementsAnalyticsEffects {
                     data: data
                   }
                 });
-              })
+              }),
+              catchError(error => of(loadingDataElementsDataFail({ error })))
             )
           )
         )

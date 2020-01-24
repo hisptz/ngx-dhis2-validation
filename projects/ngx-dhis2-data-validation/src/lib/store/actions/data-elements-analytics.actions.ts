@@ -9,3 +9,8 @@ export const addLoadedDataElementsAnalytics = createAction(
   '[data elements] add analytics data',
   props<{ data: any }>()
 );
+
+export const loadingDataElementsDataFail = createAction(
+  '[data elements] loading data elements failed',
+  props<{ error: any }>()
+);

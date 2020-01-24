@@ -1,4 +1,8 @@
-import { MemoizedSelector, createFeatureSelector } from '@ngrx/store';
+import {
+  MemoizedSelector,
+  createFeatureSelector,
+  createSelector
+} from '@ngrx/store';
 import {
   DataElementsAnalyticsState,
   dataElementsAnalyticsAdapter
@@ -13,3 +17,13 @@ export const {
   selectEntities: getDataElementsAnalyticsEntities,
   selectAll: getAllDataElementsAnalytics
 } = dataElementsAnalyticsAdapter.getSelectors(getDataElementsAnalyticsState);
+
+export const getNumberOfAnalyticsDone = createSelector(
+  getDataElementsAnalyticsState,
+  (state: DataElementsAnalyticsState) => state.loadedAnalytics
+);
+
+export const getExpectedAnalyticsCount = createSelector(
+  getDataElementsAnalyticsState,
+  (state: DataElementsAnalyticsState) => state.expectedAnalyticsCount
+);

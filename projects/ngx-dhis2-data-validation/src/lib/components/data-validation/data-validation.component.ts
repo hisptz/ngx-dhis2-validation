@@ -2,11 +2,17 @@ import { Component, OnInit, Input } from '@angular/core';
 import * as _ from 'lodash';
 import { Store } from '@ngrx/store';
 import { DataElementsAnalyticsState } from '../../store/states/data-elements-analytics.states';
-import { getDataElementsAnalytics } from '../../store/actions';
+import {
+  getDataElementsAnalytics,
+  addLoadedDataIdentifier,
+  checkIfAnalyticsIsDone
+} from '../../store/actions';
 import { drawTable } from '../../helpers';
 import {
   getDataElementsAnalyticsEntities,
-  getAllDataElementsAnalytics
+  getAllDataElementsAnalytics,
+  getNumberOfAnalyticsDone,
+  getExpectedAnalyticsCount
 } from '../../store/selectors/data-elements-analytics.selectors';
 import { Observable } from 'rxjs';
 import {
@@ -38,10 +44,16 @@ export class DataValidationComponent implements OnInit {
   selectedTableObject: any;
   isTableObjectsListCreated: Boolean = false;
   allDataElementsAnalytics$: Observable<any>;
+  loading$: Observable<Boolean>;
+  expectedAnalyticsCount$: Observable<number>;
+  analyticsDone$: Observable<any>;
+  analyticsUniqueIdentifier: string;
   constructor(private dataElementsStore: Store<DataElementsAnalyticsState>) {}
 
   ngOnInit() {
     if (this.indicator && this.analyticsPeriods) {
+      this.analyticsUniqueIdentifier =
+        this.indicator.id + '-' + this.parentOu.id + '-' + this.period;
       _.map(this.analyticsPeriods, pe => {
         let dimension = {
           visualizationId: this.indicator.id,
@@ -59,15 +71,30 @@ export class DataValidationComponent implements OnInit {
         this.dataElementsDataDimensions.length == this.analyticsPeriods.length
       ) {
         this.dataElementsStore.dispatch(
-          getDataElementsAnalytics({
-            dataDimensions: this.dataElementsDataDimensions
+          checkIfAnalyticsIsDone({
+            dimensions: {
+              id: this.analyticsUniqueIdentifier,
+              dataDimensions: this.dataElementsDataDimensions
+            }
           })
         );
+        // this.dataElementsStore.dispatch(
+        //   getDataElementsAnalytics({
+        //     dataDimensions: this.dataElementsDataDimensions
+        //   })
+        // );
 
         this.activeTableItem = this.analyticsPeriods[0];
 
         this.allDataElementsAnalytics$ = this.dataElementsStore.select(
           getAllDataElementsAnalytics
+        );
+        this.analyticsDone$ = this.dataElementsStore.select(
+          getNumberOfAnalyticsDone
+        );
+
+        this.expectedAnalyticsCount$ = this.dataElementsStore.select(
+          getExpectedAnalyticsCount
         );
         this.dataElementsAnalyticsData$ = this.dataElementsStore.select(
           getDataElementsAnalyticsEntities
@@ -110,6 +137,15 @@ export class DataValidationComponent implements OnInit {
             });
           }
         });
+
+        this.dataElementsStore.dispatch(
+          addLoadedDataIdentifier({
+            loadedDataIdentifier: {
+              id: this.analyticsUniqueIdentifier,
+              data: []
+            }
+          })
+        );
       }
     }
   }
