@@ -7,6 +7,7 @@
     >Loading
     {{
       ((analyticsDone$ | async) / (expectedAnalyticsCount$ | async)) * 100
+        | number: '1.0-0'
     }}
     %</span
   >
@@ -45,6 +46,7 @@
   "
 >
   <app-data-quality-table
+    [marginTopViolation]="marginTopViolation ? marginTopViolation : '0px'"
     [periods]="analyticsPeriods"
     [dataElementsAnalyticsData]="dataElementsAnalyticsData$ | async"
     [tableObjectsList]="tableObjectsList"

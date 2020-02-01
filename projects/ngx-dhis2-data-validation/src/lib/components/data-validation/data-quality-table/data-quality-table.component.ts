@@ -14,6 +14,7 @@ export class DataQualityTableComponent implements OnInit {
   @Input() selectedTableObject;
   @Input() dateDictionary: any;
   @Input() dataElementsAnalyticsData: any;
+  @Input() marginTopViolation: string;
   possibleViolatedRules: Array<any>;
   selectedOuForViolations: Boolean = false;
   showValidationRuleViolations: Boolean = false;

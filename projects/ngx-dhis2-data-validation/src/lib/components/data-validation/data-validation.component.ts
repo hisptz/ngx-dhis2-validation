@@ -37,6 +37,7 @@ export class DataValidationComponent implements OnInit {
   @Input() period: any;
   @Input() dataElementsDataDimensions: Array<any> = [];
   @Input() dateDictionary: any;
+  @Input() marginTopViolation: string;
   tableObjectsList: any = {};
   indicatorAnalytics: any;
   dataElementsAnalyticsData$: Observable<any>;

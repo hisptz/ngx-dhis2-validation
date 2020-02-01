@@ -1,4 +1,9 @@
-<div class="violations" *ngIf="tableColumns && tableRows">
+{{ marginTop | json }}
+<div
+  class="violations"
+  *ngIf="tableColumns && tableRows"
+  [ngStyle]="{ 'margin-top': marginTop }"
+>
   <div class="header">
     <div class="header-left">
       <h3>
@@ -19,7 +24,7 @@
       #table
       *ngFor="let rule of possibleViolatedRules"
     >
-      <thead style="background-color: #dedcdc;">
+      <thead style="background-color: #eeeeee59;">
         <tr>
           <th rowspan="2">
             Validation rule

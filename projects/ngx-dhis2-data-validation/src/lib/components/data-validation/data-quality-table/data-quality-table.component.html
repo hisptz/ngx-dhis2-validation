@@ -150,7 +150,8 @@
                             </text>
                           </svg>
                         </span>
-                        <span
+                        <!-- Discrepancy -->
+                        <!-- <span
                           class="inconstistance-bground"
                           style="width: 20px;"
                         >
@@ -162,7 +163,7 @@
                           >
                             <polygon points="0 0 20 20" fill="#e7ea31" />
                           </svg>
-                        </span>
+                        </span> -->
                       </div>
                     </td>
                     <td
@@ -210,6 +211,7 @@
 
 <div *ngIf="showValidationRuleViolations">
   <app-validation-rule-violation
+    [marginTop]="marginTopViolation"
     [allData]="selectedTableObject"
     [selectedOuForViolations]="selectedOuForViolations"
     [period]="activeTableItem"

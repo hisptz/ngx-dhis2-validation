@@ -12,6 +12,7 @@ export class ValidationRuleViolationComponent implements OnInit {
   @Input() period: string;
   @Input() allData: any;
   @Input() selectedOuForViolations: any;
+  @Input() marginTop: string;
   @Output() showValidationRuleViolationModal = new EventEmitter<boolean>();
   possibleViolatedRules: Array<any> = [];
   tableColumns: any = {};

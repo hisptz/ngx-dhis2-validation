@@ -8,6 +8,7 @@ import * as _ from 'lodash';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
+  marginTopViolation = '560px';
   selectedValidationRuleGroup: any;
   dashboardConfigurations: any;
   indicator: any;
@@ -613,7 +614,7 @@ export class HomeComponent implements OnInit {
           this.periodTypesReferences
         );
         this.period = '2018';
-        this.analyticsPeriods = _.take(this.analyticsPeriods, 8);
+        this.analyticsPeriods = this.analyticsPeriods;
       }
     });
   }
