@@ -41,3 +41,11 @@
 th {
   font-size: 0.9rem;
 }
+
+.rule-violated-list p {
+  margin-bottom: 2px !important;
+}
+
+.list-labels {
+  font-weight: 600;
+}
