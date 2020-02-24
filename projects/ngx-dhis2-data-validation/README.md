@@ -1,11 +1,25 @@
 # NgxDhis2DataValidation
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.2.14.
+This library, validate data in a dhis2 instance using the available validation rules. To use the library to to `using the libray`.
 
-## Code scaffolding
+## Using the NgxDhis2DataValidation library
 
-Run `ng generate component component-name --project ngx-dhis2-data-validation` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngx-dhis2-data-validation`.
-> Note: Don't forget to add `--project ngx-dhis2-data-validation` or else it will be added to the default project in your `angular.json` file. 
+To use the library use pass required properties as follows
+
+```<ngx-data-validation
+      [indicator]="indicator"
+      [validationRuleGroup]="selectedValidationRuleGroup"
+      [dataElements]="dataElements"
+      [parentOu]="parentOu"
+      [childrenOus]="childrenOus"
+      [period]="period"
+      [dateDictionary]="dateDictionary"
+      [indicatorDataElements]="indicatorDataElements"
+      [analyticsPeriods]="analyticsPeriods"
+      [marginTopViolation]="marginTopViolation"
+      [violationBgrColor]="violationBgrColor"
+    ></ngx-data-validation>
+```
 
 ## Build
 
