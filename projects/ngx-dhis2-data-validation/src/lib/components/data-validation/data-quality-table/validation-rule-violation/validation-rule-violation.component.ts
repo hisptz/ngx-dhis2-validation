@@ -29,7 +29,6 @@ export class ValidationRuleViolationComponent implements OnInit {
 
   ngOnInit() {
     if (this.allData) {
-      let newTableColumn = {};
       _.map(
         Object.keys(this.allData.validationViolations.violatedRules),
         key => {
@@ -41,12 +40,6 @@ export class ValidationRuleViolationComponent implements OnInit {
             const validationRule = this.allData.validationViolations
               .violatedRulesByOu[key + '-' + this.selectedOuForViolations.id];
             this.possibleViolatedRules.push(validationRule);
-            this.leftColumns = [];
-            this.rightColumns = [];
-            this.leftRows = [];
-            this.rightRows = [];
-            let leftSideElements = [];
-            let rightSideElements = [];
             let leftSideExpression = validationRule.leftSide.expression;
             let rightSideExpression = validationRule.rightSide.expression;
 
@@ -54,7 +47,6 @@ export class ValidationRuleViolationComponent implements OnInit {
             _.map(
               validationRule.leftSide.expression.match(formulaPattern),
               matchedItem => {
-                leftSideElements.push(matchedItem.replace(/[#\{\}]/g, ''));
                 leftSideExpression = this.allData.rowsData[
                   this.selectedOuForViolations.id +
                     '-' +
@@ -78,7 +70,6 @@ export class ValidationRuleViolationComponent implements OnInit {
             _.map(
               validationRule.rightSide.expression.match(formulaPattern),
               matchedItem => {
-                rightSideElements.push(matchedItem.replace(/[#\{\}]/g, ''));
                 rightSideExpression = this.allData.rowsData[
                   this.selectedOuForViolations.id +
                     '-' +
@@ -109,68 +100,6 @@ export class ValidationRuleViolationComponent implements OnInit {
             )
               ? eval(rightSideExpression)
               : 0;
-            leftSideElements.forEach(item => {
-              if (
-                this.allData.metaDataItems &&
-                this.allData.metaDataItems[item]
-              ) {
-                this.leftColumns.push(this.allData.metaDataItems[item].name);
-              }
-              if (
-                this.allData.rowsData[
-                  this.selectedOuForViolations.id +
-                    '-' +
-                    item +
-                    '-' +
-                    this.period
-                ]
-              ) {
-                this.leftRows.push(
-                  this.allData.rowsData[
-                    this.selectedOuForViolations.id +
-                      '-' +
-                      item +
-                      '-' +
-                      this.period
-                  ]
-                );
-              } else {
-                this.leftRows.push('');
-              }
-            });
-            rightSideElements.forEach(item => {
-              this.rightColumns.push(this.allData.metaDataItems[item].name);
-              if (
-                this.allData.rowsData[
-                  this.selectedOuForViolations.id +
-                    '-' +
-                    item +
-                    '-' +
-                    this.period
-                ]
-              ) {
-                this.rightRows.push(
-                  this.allData.rowsData[
-                    this.selectedOuForViolations.id +
-                      '-' +
-                      item +
-                      '-' +
-                      this.period
-                  ]
-                );
-              } else {
-                this.rightRows.push('');
-              }
-            });
-            this.tableColumns[validationRule.id] = {
-              leftColumns: this.leftColumns,
-              rightColumns: this.rightColumns
-            };
-
-            this.tableRows[validationRule.id] = {
-              left: this.leftRows,
-              right: this.rightRows
-            };
           }
         }
       );
