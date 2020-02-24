@@ -12,13 +12,15 @@ import { DataElementsAnalyticsEffects } from './store/effects/data-elements-anal
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { CheckDataLoadedEffects } from './store/effects/data-elements-loaded.effects';
 import { checkDataElementsDataLoadedReducer } from './store/reducers/dataelements-data-loaded.reducer';
+import { LegendComponent } from './containers/legend/legend.component';
 
 @NgModule({
   declarations: [
     DataValidationComponent,
     LoaderComponent,
     DataQualityTableComponent,
-    ValidationRuleViolationComponent
+    ValidationRuleViolationComponent,
+    LegendComponent
   ],
   imports: [
     CommonModule,

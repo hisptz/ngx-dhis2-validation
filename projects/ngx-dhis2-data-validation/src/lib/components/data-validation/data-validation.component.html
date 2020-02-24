@@ -56,3 +56,11 @@
     [activeTableItem]="activeTableItem"
   ></app-data-quality-table>
 </div>
+<div class="legend">
+  <h5><b>Legend</b></h5>
+  <app-legend
+    [violationBgrColor]="violationBgrColor ? violationBgrColor : 'red'"
+    [discrepancyBgrColor]=""
+    [successBgrColor]=""
+  ></app-legend>
+</div>
