@@ -132,7 +132,7 @@ export class ValidationRuleViolationComponent implements OnInit {
     return operators[rule.operator];
   }
 
-  toggleMoreInformation(ruleId) {
+  toggleMoreInformation() {
     this.showMoreDetails = !this.showMoreDetails;
   }
 }
