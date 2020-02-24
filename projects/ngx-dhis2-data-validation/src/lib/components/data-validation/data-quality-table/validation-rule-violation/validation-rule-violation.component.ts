@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 import { operators } from '../../../../constants';
+import { dateDictionary } from '../../../../constants';
 
 @Component({
   selector: 'app-validation-rule-violation',
@@ -15,20 +16,17 @@ export class ValidationRuleViolationComponent implements OnInit {
   @Input() marginTop: string;
   @Output() showValidationRuleViolationModal = new EventEmitter<boolean>();
   possibleViolatedRules: Array<any> = [];
-  tableColumns: any = {};
-  leftColumns: Array<any> = [];
-  rightColumns: Array<any> = [];
-  tableRows: any = {};
-  leftRows: Array<any> = [];
-  rightRows: Array<any> = [];
   leftSideValues: any = {}; // for storing leftside values for violated rules
   rightSideValues: any = {}; // for storing rightside values for violated rules
   showMoreDetails: Boolean = false;
+  selectedPeriod: string;
 
   constructor() {}
 
   ngOnInit() {
     if (this.allData) {
+      this.selectedPeriod =
+        dateDictionary[this.period.slice(4)] + ' ' + this.period.slice(0, 4);
       _.map(
         Object.keys(this.allData.validationViolations.violatedRules),
         key => {

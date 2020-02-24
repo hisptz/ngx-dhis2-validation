@@ -1,11 +1,11 @@
 <div
   class="violations"
-  *ngIf="tableColumns && tableRows"
+  *ngIf="leftSideValues"
   [ngStyle]="{ 'margin-top': marginTop }"
 >
   <div class="header">
     <div class="header-left">
-      <h3>{{ selectedOuForViolations.name }}</h3>
+      <h3>{{ selectedOuForViolations.name }} - {{ selectedPeriod }}</h3>
     </div>
     <div class="header-right">
       <button class="btn" (click)="unSetModal($event)" title="Close">
