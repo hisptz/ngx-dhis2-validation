@@ -9,6 +9,7 @@ import * as _ from 'lodash';
 })
 export class HomeComponent implements OnInit {
   marginTopViolation = '10px';
+  violationBgrColor = '#ff89a0';
   selectedValidationRuleGroup: any;
   dashboardConfigurations: any;
   indicator: any;

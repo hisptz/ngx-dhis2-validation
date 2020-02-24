@@ -131,7 +131,10 @@
                       {{ row.name }}
                       <div style="float: right;">
                         <span
-                          class="violation-bground"
+                          [ngStyle]="{
+                            'background-color': violationBgrColor,
+                            cursor: 'pointer'
+                          }"
                           *ngIf="
                             tableObjectsList[pe].numberOfRuleViolationsByOu &&
                             tableObjectsList[pe].numberOfRuleViolationsByOu[
@@ -140,7 +143,7 @@
                           "
                         >
                           <svg viewbox="0 0 20 20" width="20" height="20">
-                            <polygon points="0 0 20 20" fill="#ff89a0" />
+                            <polygon points="0 0 20 20" fill="" />
                             <text fill="#000" x="8" y="10" font-size="11">
                               {{
                                 tableObjectsList[pe].numberOfRuleViolationsByOu[
@@ -185,11 +188,14 @@
                           ][row.id + '-' + headerColumn.id + '-' + pe]
                         )
                       "
-                      [ngClass]="{
-                        'violation-bground':
+                      [ngStyle]="{
+                        'background-color':
                           tableObjectsList[pe]['validationViolations'][
                             'violations'
                           ][row.id + '-' + headerColumn.id + '-' + pe] == 'fail'
+                            ? violationBgrColor
+                            : 'transparent',
+                        cursor: 'pointer'
                       }"
                     >
                       {{

@@ -21,6 +21,10 @@ export class ValidationRuleViolationComponent implements OnInit {
   tableRows: any = {};
   leftRows: Array<any> = [];
   rightRows: Array<any> = [];
+  leftSideValues: any = {}; // for storing leftside values for violated rules
+  rightSideValues: any = {}; // for storing rightside values for violated rules
+  showMoreDetails: Boolean = false;
+
   constructor() {}
 
   ngOnInit() {
@@ -43,20 +47,68 @@ export class ValidationRuleViolationComponent implements OnInit {
             this.rightRows = [];
             let leftSideElements = [];
             let rightSideElements = [];
+            let leftSideExpression = validationRule.leftSide.expression;
+            let rightSideExpression = validationRule.rightSide.expression;
 
             const formulaPattern = /#\{.+?\}/g;
             _.map(
               validationRule.leftSide.expression.match(formulaPattern),
               matchedItem => {
                 leftSideElements.push(matchedItem.replace(/[#\{\}]/g, ''));
+                leftSideExpression = this.allData.rowsData[
+                  this.selectedOuForViolations.id +
+                    '-' +
+                    matchedItem.replace(/[#\{\}]/g, '') +
+                    '-' +
+                    this.period
+                ]
+                  ? leftSideExpression.replace(
+                      matchedItem,
+                      this.allData.rowsData[
+                        this.selectedOuForViolations.id +
+                          '-' +
+                          matchedItem.replace(/[#\{\}]/g, '') +
+                          '-' +
+                          this.period
+                      ]
+                    )
+                  : leftSideExpression.replace(matchedItem, 0);
               }
             );
             _.map(
               validationRule.rightSide.expression.match(formulaPattern),
               matchedItem => {
                 rightSideElements.push(matchedItem.replace(/[#\{\}]/g, ''));
+                rightSideExpression = this.allData.rowsData[
+                  this.selectedOuForViolations.id +
+                    '-' +
+                    matchedItem.replace(/[#\{\}]/g, '') +
+                    '-' +
+                    this.period
+                ]
+                  ? rightSideExpression.replace(
+                      matchedItem,
+                      this.allData.rowsData[
+                        this.selectedOuForViolations.id +
+                          '-' +
+                          matchedItem.replace(/[#\{\}]/g, '') +
+                          '-' +
+                          this.period
+                      ]
+                    )
+                  : rightSideExpression.replace(matchedItem, 0);
               }
             );
+            this.leftSideValues[validationRule.id + '-left'] = eval(
+              leftSideExpression
+            )
+              ? eval(leftSideExpression)
+              : 0;
+            this.rightSideValues[validationRule.id + '-right'] = eval(
+              rightSideExpression
+            )
+              ? eval(rightSideExpression)
+              : 0;
             leftSideElements.forEach(item => {
               if (
                 this.allData.metaDataItems &&
@@ -151,5 +203,9 @@ export class ValidationRuleViolationComponent implements OnInit {
 
   getOperator(rule) {
     return operators[rule.operator];
+  }
+
+  toggleMoreInformation(ruleId) {
+    this.showMoreDetails = !this.showMoreDetails;
   }
 }

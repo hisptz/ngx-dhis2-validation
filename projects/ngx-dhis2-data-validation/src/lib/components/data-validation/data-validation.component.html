@@ -47,6 +47,7 @@
 >
   <app-data-quality-table
     [marginTopViolation]="marginTopViolation ? marginTopViolation : '0px'"
+    [violationBgrColor]="violationBgrColor ? violationBgrColor : 'red'"
     [periods]="analyticsPeriods"
     [dataElementsAnalyticsData]="dataElementsAnalyticsData$ | async"
     [tableObjectsList]="tableObjectsList"

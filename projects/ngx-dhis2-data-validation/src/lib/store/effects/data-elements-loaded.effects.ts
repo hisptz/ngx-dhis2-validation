@@ -20,7 +20,6 @@ export class CheckDataLoadedEffects {
           ) {
             return state.loadedDataElementsData.entities[action.dimensions.id];
           } else {
-            console.log('about to load');
             this.store.dispatch(
               getDataElementsAnalytics({
                 dataDimensions: action.dimensions.dataDimensions

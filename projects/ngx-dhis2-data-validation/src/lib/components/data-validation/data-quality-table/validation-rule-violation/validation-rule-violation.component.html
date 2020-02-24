@@ -14,73 +14,61 @@
     </div>
   </div>
   <div style="max-height: 400px;overflow-y: auto; width: 100%;display: block;">
-    <p style="font-size: 1.4rem; margin-top: 15px;">
-      The following rule<span *ngIf="possibleViolatedRules.length > 1"
-        >s are</span
-      >
-      <span *ngIf="possibleViolatedRules.length == 1"> is </span> violated
-    </p>
-    <div
-      class="rule-violated-list"
-      *ngFor="let rule of possibleViolatedRules; trackBy: index"
-    >
-      <h5>{{ rule.name }}</h5>
-      <!-- <hr style="margin-top: 5px; margin-bottom: 0px;" /> -->
-      <p>
-        <span class="list-labels">Left:</span>{{ rule.leftSide.description }}
-      </p>
-      <p>
-        <span class="list-labels">Operator:</span><b>{{ getOperator(rule) }}</b>
-      </p>
-      <p>
-        <span class="list-labels">Left:</span>{{ rule.rightSide.description }}
-      </p>
-      <br />
-      <hr />
+    <div style=" width: 100%;">
+      <div style="width: 50%; float: left">
+        <p style="font-size: 1.4rem; margin-top: 15px;">
+          The following rule<span *ngIf="possibleViolatedRules.length > 1"
+            >s are</span
+          >
+          <span *ngIf="possibleViolatedRules.length == 1"> is </span> violated
+        </p>
+      </div>
+      <div style="width: 50%; float: right;">
+        <a
+          (click)="toggleMoreInformation()"
+          style="cursor: pointer; float: right; color: #276696 !important"
+          >Show <span *ngIf="showMoreDetails">less </span>
+          <span *ngIf="!showMoreDetails">more </span> details</a
+        >
+      </div>
     </div>
-    <!-- <table
-      style="margin-top: 10px;"
-      class="table table-bordered table-condensed custom-table"
-      #table
+    <div
+      style="width: 100%; float: left;"
+      class="rule-violated-list"
       *ngFor="let rule of possibleViolatedRules"
     >
-      <thead style="background-color: #eeeeee59;">
-        <tr>
-          <th rowspan="2">
-            Validation rule
-          </th>
-          <th [attr.colspan]="tableColumns[rule.id].leftColumns.length">
-            Left side ({{ rule.leftSide.description }})
-          </th>
-          <th>Operator</th>
-          <th [attr.colspan]="tableColumns[rule.id].rightColumns.length">
-            Right side ({{ rule.rightSide.description }})
-          </th>
-        </tr>
-        <tr>
-          <th *ngFor="let item of tableColumns[rule.id].leftColumns">
-            <span>
-              {{ item }}
-            </span>
-          </th>
-          <th>{{ getOperator(rule) }}</th>
-          <th *ngFor="let item of tableColumns[rule.id].rightColumns">
-            <span>
-              {{ item }}
-            </span>
-          </th>
-        </tr>
-      </thead>
-      <tbody *ngIf="tableRows">
-        <tr>
-          <td>{{ rule.name }}</td>
-          <td *ngFor="let rowData of tableRows[rule.id].left">{{ rowData }}</td>
-          <td>{{ getOperator(rule) }}</td>
-          <td *ngFor="let rowData of tableRows[rule.id].right">
-            {{ rowData }}
-          </td>
-        </tr>
-      </tbody>
-    </table> -->
+      <h5 style="font-size: 1.1rem;">{{ rule.name }}</h5>
+      <div style="width: 100%;">
+        <h6 style="text-align: left"><b>Summary:</b></h6>
+      </div>
+      <div style="width: 100%; padding: 0 25px 0 25px;">
+        <p>
+          As per the rule above, Left side value is expected to be
+          <b>{{ getOperator(rule) }}</b> the Right side valu, <b>but</b> the
+          left side value is
+          <b>{{ leftSideValues[rule.id + '-left'] }}</b> while the right side
+          value is <b>{{ rightSideValues[rule.id + '-right'] }}</b> i.e
+          <b
+            >( {{ leftSideValues[rule.id + '-left'] }}
+            {{ getOperator(rule) }}
+            {{ rightSideValues[rule.id + '-right'] }}</b
+          >)
+        </p>
+      </div>
+      <br />
+      <div style="width: 100%;padding: 0 25px 0 25px;" *ngIf="showMoreDetails">
+        <p>
+          <span class="list-labels">Left:</span>{{ rule.leftSide.description }}
+        </p>
+        <p>
+          <span class="list-labels">Operator:</span
+          ><b>{{ getOperator(rule) }}</b>
+        </p>
+        <p>
+          <span class="list-labels">Left:</span>{{ rule.rightSide.description }}
+        </p>
+      </div>
+      <hr />
+    </div>
   </div>
 </div>
