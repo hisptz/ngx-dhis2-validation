@@ -6,7 +6,8 @@ This library, validate data in a dhis2 instance using the available validation r
 
 To use the library use pass required properties as follows
 
-```<ngx-data-validation
+```
+<ngx-data-validation
       [indicator]="indicator"
       [validationRuleGroup]="selectedValidationRuleGroup"
       [dataElements]="dataElements"
