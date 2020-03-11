@@ -1,0 +1,7 @@
+.table tr,
+.table th,
+.table td {
+  padding: 0 !important;
+  vertical-align: middle;
+  border-top: none;
+}

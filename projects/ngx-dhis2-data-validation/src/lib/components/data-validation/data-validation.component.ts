@@ -39,6 +39,8 @@ export class DataValidationComponent implements OnInit {
   @Input() dateDictionary: any;
   @Input() marginTopViolation: string;
   @Input() violationBgrColor: string;
+  @Input() discrepancyBgrColor: string;
+  @Input() successBgrColor: string;
   tableObjectsList: any = {};
   indicatorAnalytics: any;
   dataElementsAnalyticsData$: Observable<any>;

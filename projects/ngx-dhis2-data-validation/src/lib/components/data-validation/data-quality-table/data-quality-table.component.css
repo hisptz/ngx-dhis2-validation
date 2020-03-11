@@ -17,7 +17,8 @@
 }
 
 .nav-tabs li .active {
-  color: #2a8fd1 !important;
+  background-color: #00796b;
+  color: #fff !important;
   border-bottom: none;
 }
 
@@ -36,7 +37,7 @@
 
 .nav-link {
   display: block;
-  padding: 0.3rem 0.3rem;
+  padding: 0.4rem 0.4rem;
 }
 
 .table-item-container {
@@ -87,6 +88,7 @@ table tr td:first-child {
 
 .table {
   margin-bottom: 0rem;
+  position: relative;
 }
 
 .gray-bc {
@@ -119,4 +121,30 @@ div.operator {
 }
 div.rotate > span {
   padding: 5px 10px;
+}
+
+.page {
+  width: 95vw;
+  margin: 0 auto;
+}
+.table-with-fixed-header {
+  overflow: scroll;
+  max-width: 95vw;
+  height: 74vh;
+}
+
+table {
+  /*table-layout: fixed;*/
+  border-collapse: collapse;
+  width: 1500px;
+}
+
+thead th:first-child {
+  width: 20px;
+  padding: 0;
+}
+
+th,
+td {
+  padding: 10px 5px;
 }

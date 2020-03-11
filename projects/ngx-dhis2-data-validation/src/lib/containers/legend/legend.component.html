@@ -1,4 +1,36 @@
-<table class="table table-responsive">
+<div style="width: 100%; display: flex; margin: 5px 0 15px 0">
+  <div style="min-width: 15%; float: left">
+    <div
+      style="width: 6%; height: 20px;float: left;;"
+      [ngStyle]="{ 'background-color': violationBgrColor }"
+    ></div>
+    <div style="float: left; text-align: left;margin-left: 10px;">
+      Validation <b [ngStyle]="{ color: violationBgrColor }">violation</b>
+    </div>
+  </div>
+  <div style="min-width: 15%; float: left">
+    <div
+      style="width: 6%; height: 20px;;float: left;;"
+      [ngStyle]="{ 'background-color': discrepancyBgrColor }"
+    ></div>
+    <div style="float: left; text-align: left;margin-left: 10px;">
+      Discrepancy by <b>20%</b>
+    </div>
+  </div>
+  <div style="min-width: 20%; float: left">
+    <div style="width: 6%; height: 20px;float: left;;">
+      <img
+        height="25px"
+        style="margin-top: -6px"
+        src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8YQUAAAAJcEhZcwAADsMAAA7DAcdvqGQAAANrSURBVGhD7ZrLaxNRFMaz9i2+/iELwZnmzjQJLVRcuBCsXSiIutUarRt1IW5ciLSIjWSmhlIpiC8wRhPUpQVduLFFENuCrmzHcyZnUCbnZl53Ji7ywQ9KMvfc75t7586dSXMDDTRQdjJr5kHNMsu6ZVSAh8AL3TbaiGaL5/RZRZsvlPBYavZ/SNhij2YZk2CwBWyBaScUeKxlNLEt1qBy2Qs7ByPTYGSDNRoFy1gHKpkHgqlxTLfFN9ZUAuCkrGo1c5y6SU+F+cJOCDDLmVCLmC1XyzuoW7UafjR8CM7YO77jVGhjn9S9GuXnSgfgLC0znaWMWMa+yUYy0XT6wHeUAbAaKplmsP7fZzvIFDFDduKpszpxhbMn9mqmLWh74UwoX2LjgktzrPsM3uy4gmly+tVx50LrBPtdB3GF7IUTbTuS37EjgCGav687ra0bPcKItUijAiEm+ULp4IVoOzddAsJMkM1gwcFv+CLq8YfwuPXpLHs8rKKvyWZv4fYaro/wu9gEyELc/nzOGbZNtg0E2dTr+n6yK5f7PMEUUE2cEH8RRbIrF64MfGN1JAvhjsplsisXBKlyjVWRNAQCi9EDsisXXB8vucYco4tl5+jSGPsdh4oQCD42k125IMh7rrEfDPF4o+I8+TkdKoyqEAg+TpBdufAgrvG/eCE8M0FhVIZAQgUJM7XufDnfZUoW5kxDbQgk3NQKcbGXFoqO/f1ilzl/mDRCIGEv9grX2E9QmLRCIDAiU2RXrig3xE6YS11mn/66llqIDiFuiO7zeYQtiiyMH1UhcItiWMY+sttbEKTJFZERFEbdSLhBGmQzWHrNPMUV6YUsjMoQCFzoJ8lmsOh16DpXqBf+MCmE+BH5cReG8CpXLAgvjOoQCHgK3iz6RY+7q1zBIEbqReUhYKVayS/md5G9aMJXMHzRfiBGyVY8QYEZvnCGWMY9shNf+LoS5uZbtoMswFtBXd9GdpKpXy+x4Rr9qOwltid8xQ/F8fdAtlPV4CxQHsITTjMYmdR/6IGRuDu0NLSduk1PndVMrHAmkiG+Qu0x6iYb0d0ff4aOvAPoRqzBVJo6XC3vpvLZyw0EezMw0gA2eaPd4LHYBkJM9DUAJ3wDeMQyRvDsAnMwWs/AtPsPA/g3fobf4TGht+IDDTSQAuVyfwDdSxtBGQ/GPQAAAABJRU5ErkJggg=="
+      />
+    </div>
+    <div style="float: left; text-align: left;margin-left: 10px;">
+      Validation passed successfuly
+    </div>
+  </div>
+</div>
+<!-- <table class="table table-responsive">
   <body>
     <tr>
       <td
@@ -6,24 +38,14 @@
         [ngStyle]="{ 'background-color': violationBgrColor }"
       ></td>
       <td>
-        This indicates, the data for the particular indicator for selected
-        organisation unit and period the guding validation rule has been
-        <b [ngStyle]="{ color: violationBgrColor }">violated</b>
+        Validation
+        <b [ngStyle]="{ color: violationBgrColor }">violation</b>
       </td>
-    </tr>
-    <tr>
       <td
         style="width: 5%;"
         [ngStyle]="{ 'background-color': discrepancyBgrColor }"
       ></td>
-      <td>
-        This indicates the indicator has a deviation of
-        <b [ngStyle]="{ color: discrepancyBgrColor }">more than 20%</b> for the
-        particular facility compaired to the effective indicator value for the
-        council level.
-      </td>
-    </tr>
-    <tr>
+      <td>Discrepancy by <b>20%</b></td>
       <td style="width: 5%;">
         <img
           height="auto"
@@ -34,4 +56,4 @@
       <td>Validation passed successfuly</td>
     </tr>
   </body>
-</table>
+</table> -->

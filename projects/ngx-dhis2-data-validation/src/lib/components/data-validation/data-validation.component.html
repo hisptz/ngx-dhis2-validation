@@ -1,3 +1,10 @@
+<div class="legend">
+  <app-legend
+    [violationBgrColor]="violationBgrColor ? violationBgrColor : 'red'"
+    [discrepancyBgrColor]="discrepancyBgrColor ? discrepancyBgrColor : 'yellow'"
+    [successBgrColor]="successBgrColor ? successBgrColor : 'green'"
+  ></app-legend>
+</div>
 <div
   *ngIf="
     ((analyticsDone$ | async) / (expectedAnalyticsCount$ | async)) * 100 < 100
@@ -55,12 +62,4 @@
     [isTableObjectsListCreated]="isTableObjectsListCreated"
     [activeTableItem]="activeTableItem"
   ></app-data-quality-table>
-</div>
-<div class="legend">
-  <h5><b>Legend</b></h5>
-  <app-legend
-    [violationBgrColor]="violationBgrColor ? violationBgrColor : 'red'"
-    [discrepancyBgrColor]=""
-    [successBgrColor]=""
-  ></app-legend>
 </div>

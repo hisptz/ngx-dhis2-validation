@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import * as _ from 'lodash';
 import { dateDictionary } from '../../../constants';
 
@@ -7,7 +7,7 @@ import { dateDictionary } from '../../../constants';
   templateUrl: './data-quality-table.component.html',
   styleUrls: ['./data-quality-table.component.css']
 })
-export class DataQualityTableComponent implements OnInit {
+export class DataQualityTableComponent implements OnInit, AfterViewInit {
   @Input() periods;
   @Input() tableObjectsList;
   @Input() isTableObjectsListCreated;
@@ -23,6 +23,19 @@ export class DataQualityTableComponent implements OnInit {
   constructor() {}
 
   ngOnInit() {}
+
+  ngAfterViewInit() {
+    let elements = document.getElementsByClassName('table-with-fixed-header');
+    for (var i = 0; i < elements.length; i++) {
+      elements[i].addEventListener('scroll', function() {
+        var translate = 'translate(0,' + this.scrollTop + 'px)';
+        var myElements = this.querySelectorAll('thead');
+        for (var i = 0; i < myElements.length; i++) {
+          myElements[i].style.transform = translate;
+        }
+      });
+    }
+  }
 
   setActivePeriod(pe) {
     this.activeTableItem = pe;
