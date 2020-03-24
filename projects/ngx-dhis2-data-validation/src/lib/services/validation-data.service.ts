@@ -32,16 +32,21 @@ export class ValidationDataService {
 
   getValidationData(dimensions): Observable<any> {
     return from(dimensions).pipe(
-      mergeMap((dimension: any, index) => {
-        const url =
-          'dataAnalysis/validationRulesExpression?validationRuleId=' +
-          dimension.validationRuleId +
-          '&periodId=' +
-          dimension.periodId +
-          '&organisationUnitId=' +
-          dimension.organisationUnitId;
-        return <Observable<any>>this.httpClient.get(url);
-      }, 3)
+      mergeMap(
+        (dimension: any, index) => {
+          console.log(index);
+          const url =
+            'dataAnalysis/validationRulesExpression?validationRuleId=' +
+            dimension.validationRuleId +
+            '&periodId=' +
+            dimension.periodId +
+            '&organisationUnitId=' +
+            dimension.organisationUnitId;
+          return <Observable<any>>this.httpClient.get(url);
+        },
+        null,
+        3
+      )
     );
   }
 
