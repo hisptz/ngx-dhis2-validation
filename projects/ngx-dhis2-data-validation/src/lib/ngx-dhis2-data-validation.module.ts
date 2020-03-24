@@ -3,16 +3,15 @@ import { DataValidationComponent } from './components/data-validation/data-valid
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { StoreModule } from '@ngrx/store';
-import { dataElementsAnalyticsReducer } from './store/reducers/data-elements-analytics.reducer';
+import { validationDataReducer } from './store/reducers/data-validation.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { LoaderComponent } from './containers/loader/loader.component';
 import { DataQualityTableComponent } from './components/data-validation/data-quality-table/data-quality-table.component';
 import { ValidationRuleViolationComponent } from './components/data-validation/data-quality-table/validation-rule-violation/validation-rule-violation.component';
-import { DataElementsAnalyticsEffects } from './store/effects/data-elements-analytics.effects';
+import { ValidationDataEffects } from './store/effects/data-validation.effects';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { CheckDataLoadedEffects } from './store/effects/data-elements-loaded.effects';
-import { checkDataElementsDataLoadedReducer } from './store/reducers/dataelements-data-loaded.reducer';
 import { LegendComponent } from './containers/legend/legend.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,19 +24,10 @@ import { LegendComponent } from './containers/legend/legend.component';
   imports: [
     CommonModule,
     FormsModule,
+    HttpClientModule,
     MatProgressBarModule,
-    StoreModule.forFeature(
-      'dataElementsAnalytics',
-      dataElementsAnalyticsReducer
-    ),
-    StoreModule.forFeature(
-      'loadedDataElementsData',
-      checkDataElementsDataLoadedReducer
-    ),
-    EffectsModule.forFeature([
-      DataElementsAnalyticsEffects,
-      CheckDataLoadedEffects
-    ])
+    StoreModule.forFeature('validationData', validationDataReducer),
+    EffectsModule.forFeature([ValidationDataEffects])
   ],
   exports: [DataValidationComponent, MatProgressBarModule]
 })

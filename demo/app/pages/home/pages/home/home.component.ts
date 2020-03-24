@@ -88,6 +88,7 @@ export class HomeComponent implements OnInit {
   };
   period: string;
   indicatorDataElements: Array<any> = [];
+  validationRules: Array<string>;
   constructor(private dataStoreService: DataStoreService) {
     this.parentOu = { name: 'Arusha City Council', id: 'lgZ6HfZaj3f' };
     this.childrenOus = [
@@ -125,6 +126,11 @@ export class HomeComponent implements OnInit {
         );
 
         this.indicator = this.selectedValidationRuleGroup.indicators[0];
+        console.log('indicator', this.indicator);
+        this.validationRules = this.selectedValidationRuleGroup.indicators[0][
+          'validationRules'
+        ];
+
         const expression =
           this.indicator['numerator'] + '+' + this.indicator['denominator'];
         const formulaPattern = /#\{.+?\}/g;

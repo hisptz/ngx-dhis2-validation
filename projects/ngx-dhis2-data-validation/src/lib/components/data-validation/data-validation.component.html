@@ -45,14 +45,15 @@
     </div>
   </div>
 </div>
-
+{{ validationDimensions.length }}
+{{ validationDimensions | json }}
 <div
   *ngIf="
     (dataElementsAnalyticsData$ | async) &&
     ((analyticsDone$ | async) / (expectedAnalyticsCount$ | async)) * 100 >= 25
   "
 >
-  <app-data-quality-table
+  <!-- <app-data-quality-table
     [marginTopViolation]="marginTopViolation ? marginTopViolation : '0px'"
     [violationBgrColor]="violationBgrColor ? violationBgrColor : 'red'"
     [periods]="analyticsPeriods"
@@ -61,5 +62,5 @@
     [selectedTableObject]="selectedTableObject"
     [isTableObjectsListCreated]="isTableObjectsListCreated"
     [activeTableItem]="activeTableItem"
-  ></app-data-quality-table>
+  ></app-data-quality-table> -->
 </div>
