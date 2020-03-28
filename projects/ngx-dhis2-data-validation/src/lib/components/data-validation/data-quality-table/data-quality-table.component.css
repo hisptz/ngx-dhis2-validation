@@ -148,3 +148,8 @@ th,
 td {
   padding: 10px 5px;
 }
+
+.table th,
+.table td {
+  padding: 0.15rem !important;
+}

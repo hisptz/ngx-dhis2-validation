@@ -6,7 +6,11 @@ import {
 import {
   loadValidationData,
   addLoadedDataForValidation,
-  loadingValidationDataFail
+  loadingValidationDataFail,
+  loadValidationRules,
+  addLoadedValidationRules,
+  loadingValidationRulesFail,
+  addDimensionsForLoadedData
 } from '../actions';
 
 export const reducer = createReducer(
@@ -28,6 +32,13 @@ export const reducer = createReducer(
       countOfLoadedDataAnalysis: state.countOfLoadedDataAnalysis + 1
     })
   ),
+  on(addDimensionsForLoadedData, (state, { dimensionsForLoadedData }) => ({
+    ...state,
+    keysForCheckingLoadedDimensions: [
+      ...state.keysForCheckingLoadedDimensions,
+      dimensionsForLoadedData
+    ]
+  })),
   on(loadingValidationDataFail, (state, { error }) => ({
     ...state,
     error: error,
@@ -35,6 +46,22 @@ export const reducer = createReducer(
     loading: false,
     hasError: true,
     loadedAnalytics: state.countOfLoadedDataAnalysis + 1
+  })),
+  on(loadValidationRules, state => ({
+    ...state,
+    loadingValidationRules: true
+  })),
+  on(addLoadedValidationRules, (state, { validationRules }) => ({
+    ...state,
+    validationRules: validationRules,
+    loadedValidationRules: true,
+    loadingValidationRules: false
+  })),
+  on(loadingValidationRulesFail, (state, { error }) => ({
+    ...state,
+    loadingValidationRules: false,
+    loadedValidationRules: true,
+    validationRuleLoadingError: error
   }))
 );
 

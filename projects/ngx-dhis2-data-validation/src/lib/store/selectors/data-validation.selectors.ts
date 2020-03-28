@@ -11,7 +11,7 @@ import {
 export const getValidationDataState: MemoizedSelector<
   object,
   ValidationDataState
-> = createFeatureSelector<ValidationDataState>('dataElementsAnalytics');
+> = createFeatureSelector<ValidationDataState>('validationInfo');
 
 export const {
   selectEntities: getValidationDataEntities,
@@ -26,4 +26,14 @@ export const getNumberOfAnalyticsDone = createSelector(
 export const getExpectedAnalyticsCount = createSelector(
   getValidationDataState,
   (state: ValidationDataState) => state.expectedCount
+);
+
+export const getLoadedValidationRules = createSelector(
+  getValidationDataState,
+  (state: ValidationDataState) => state.validationRules
+);
+
+export const getDimensionsForLoadedData = createSelector(
+  getValidationDataState,
+  (state: ValidationDataState) => state.keysForCheckingLoadedDimensions
 );

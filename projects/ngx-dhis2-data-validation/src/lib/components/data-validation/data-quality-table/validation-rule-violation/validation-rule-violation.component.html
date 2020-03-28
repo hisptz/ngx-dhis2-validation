@@ -1,4 +1,4 @@
-<div
+<!-- <div
   class="violations"
   *ngIf="leftSideValues"
   [ngStyle]="{ 'margin-top': marginTop }"
@@ -69,6 +69,86 @@
         </p>
       </div>
       <hr />
+    </div>
+  </div>
+</div> -->
+<div
+  class="violations"
+  *ngIf="validationDetails"
+  [ngStyle]="{ 'margin-top': marginTop, height: '520px;' }"
+>
+  <div class="validation-details-header">
+    <div style="width: 100%; margin-top: -20px">
+      <button
+        class="btn"
+        style="float: right;"
+        (click)="unSetModal($event)"
+        title="Close"
+      >
+        Close
+      </button>
+    </div>
+    <div style="width: 100%; display: inline-block;">
+      <h4>{{ validationDetails['validationRule'].name }}</h4>
+      <h6 style="font-weight: 600">
+        <em>{{ period['period'] }}</em>
+      </h6>
+    </div>
+  </div>
+  <hr style="margin-top: 0 !important" />
+  <div
+    class="validation-details"
+    style="max-height: 300px;overflow-y: auto; width: 100%;display: block;"
+  >
+    <div class="left-side">
+      <div>
+        <h5>Left side</h5>
+        <h6 class="side-of-a-rule">
+          <em>{{
+            validationDetails['validationRule']['leftSide']['description']
+          }}</em>
+        </h6>
+      </div>
+      <div
+        class="detail"
+        style="display: flex;"
+        *ngFor="
+          let detail of validationDetails['data']['leftSide']['details'];
+          let i = index
+        "
+      >
+        <div style="float: left; width: 80%">
+          <span style="margin-right: 5px">{{ i + 1 }}.</span>{{ detail.name }}
+        </div>
+        <div style="float: right; text-align: right; width: 20%">
+          {{ detail.value ? detail.value : 'empty' }}
+        </div>
+      </div>
+    </div>
+    <div class="right-side" style="margin-top: 8px">
+      <div>
+        <h5>Right Side</h5>
+        <h6 class="side-of-a-rule">
+          <em>{{
+            validationDetails['validationRule']['leftSide']['description']
+          }}</em>
+        </h6>
+      </div>
+      <div
+        class="detail"
+        style="display: flex;"
+        *ngFor="
+          let detail of validationDetails['data']['rightSide']['details'];
+          let i = index
+        "
+      >
+        <div style="float: left; width: 80%">
+          <span style="margin-right: 5px">{{ i + 1 }}.</span>{{ detail.name }}
+        </div>
+        <div style="float: right; text-align: right; width: 20%">
+          {{ detail.value ? detail.value : 'empty' }}
+        </div>
+      </div>
     </div>
   </div>
 </div>

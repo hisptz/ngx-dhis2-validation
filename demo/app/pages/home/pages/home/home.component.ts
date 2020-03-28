@@ -19,6 +19,7 @@ export class HomeComponent implements OnInit {
   parentOu: any;
   childrenOus: any;
   analyticsPeriods: any;
+  currentValidationPeriod: any;
   dateDictionary: any = {
     '10': 'Oct',
     '11': 'Nov',
@@ -99,18 +100,6 @@ export class HomeComponent implements OnInit {
       {
         name: 'Okoa Dispensary',
         id: 'FxkvwFQBteg'
-      },
-      {
-        name: 'Mt. Meru Hospital',
-        id: 'Nky82zx6NQw'
-      },
-      {
-        name: 'Daraja Ii Health Center',
-        id: 'Vnzin0vWH9c'
-      },
-      {
-        name: 'Eben Dispensary',
-        id: 'MGRNfzaj2NR'
       }
     ];
   }
@@ -126,7 +115,6 @@ export class HomeComponent implements OnInit {
         );
 
         this.indicator = this.selectedValidationRuleGroup.indicators[0];
-        console.log('indicator', this.indicator);
         this.validationRules = this.selectedValidationRuleGroup.indicators[0][
           'validationRules'
         ];
@@ -137,23 +125,42 @@ export class HomeComponent implements OnInit {
         _.map(expression.match(formulaPattern), matchedItem => {
           this.indicatorDataElements.push(matchedItem.replace(/[#\{\}]/g, ''));
         });
+        this.period = '2020';
         this.analyticsPeriods = this.formatAnalyticsPeriods(
           'Monthly',
-          2019,
+          this.period,
           this.periodTypesReferences
         );
-        this.period = '2019';
-        this.analyticsPeriods = this.analyticsPeriods;
+        this.currentValidationPeriod = _.last(this.analyticsPeriods);
       }
     });
   }
 
   formatAnalyticsPeriods(periodType, pe, periodTypesReferences) {
+    let now = new Date();
+    const currentMonth = now.getMonth() + 1;
+    const currentYear = now.getFullYear();
     let analyticsPeriods = [];
-    _.map(periodTypesReferences[periodType].identifiers, indentifier => {
-      analyticsPeriods.push(pe.toString() + indentifier);
+    _.map(periodTypesReferences[periodType].identifiers, identifier => {
+      // identify maximum valid period
+      if (
+        Number(pe) == currentYear &&
+        Number(this.getIdentifierNumericPart(identifier)) < currentMonth
+      ) {
+        analyticsPeriods.push(pe.toString() + identifier);
+      } else if (Number(pe) < currentYear) {
+        analyticsPeriods.push(pe.toString() + identifier);
+      }
     });
     return analyticsPeriods;
+  }
+
+  getIdentifierNumericPart(identifier) {
+    if (identifier.indexOf('Q') > -1) {
+      return Number(_.last(identifier) * 3);
+    } else {
+      return identifier;
+    }
   }
 
   getDataElementsFromValidationRules(validationRules) {

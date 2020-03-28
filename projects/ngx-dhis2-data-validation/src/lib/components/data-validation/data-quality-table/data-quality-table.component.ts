@@ -1,6 +1,16 @@
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import * as _ from 'lodash';
 import { dateDictionary } from '../../../constants';
+import { Store } from '@ngrx/store';
+import { ValidationDataState } from '../../../store/states/data-validation.states';
+import { loadValidationData } from '../../../store/actions';
+import { Observable } from 'rxjs';
+import { getValidationDataEntities } from '../../../store/selectors/data-validation.selectors';
+import {
+  createValidationHeaders,
+  getValidationRulesIds,
+  createValidationDimensions
+} from '../../../helpers';
 
 @Component({
   selector: 'app-data-quality-table',
@@ -8,37 +18,76 @@ import { dateDictionary } from '../../../constants';
   styleUrls: ['./data-quality-table.component.css']
 })
 export class DataQualityTableComponent implements OnInit, AfterViewInit {
-  @Input() periods;
-  @Input() tableObjectsList;
+  @Input() periods: any;
+  @Input() validationRules: Array<any>;
   @Input() isTableObjectsListCreated;
   @Input() selectedTableObject;
   @Input() dateDictionary: any;
-  @Input() dataElementsAnalyticsData: any;
+  @Input() validationDimensions: any;
   @Input() marginTopViolation: string;
   @Input() violationBgrColor: string;
+  @Input() organisationUnits: Array<any>;
+  @Input() currentValidationPeriod: any;
+  validationDetails: any;
   possibleViolatedRules: Array<any>;
-  selectedOuForViolations: Boolean = false;
+  isSelectionForViolationsSet: Boolean = false;
   showValidationRuleViolations: Boolean = false;
-  @Input() activeTableItem: any;
-  constructor() {}
+  activeTableItem: any;
+  validationEntities$: Observable<any>;
+  headers: any;
+  formattedPeriod: any;
+  constructor(private store: Store<ValidationDataState>) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    if (this.validationDimensions) {
+      this.activeTableItem = this.currentValidationPeriod;
+      this.headers = createValidationHeaders(
+        this.periods,
+        this.validationRules
+      );
+      this.store.dispatch(
+        loadValidationData({
+          dataDimensions: this.validationDimensions,
+          validationRules: this.validationRules,
+          keyForCheckingLoadedDimensions:
+            this.activeTableItem +
+            '-' +
+            getValidationRulesIds(this.validationRules).join('-')
+        })
+      );
+      this.validationEntities$ = this.store.select(getValidationDataEntities);
+    }
+  }
 
   ngAfterViewInit() {
-    let elements = document.getElementsByClassName('table-with-fixed-header');
-    for (var i = 0; i < elements.length; i++) {
-      elements[i].addEventListener('scroll', function() {
-        var translate = 'translate(0,' + this.scrollTop + 'px)';
-        var myElements = this.querySelectorAll('thead');
-        for (var i = 0; i < myElements.length; i++) {
-          myElements[i].style.transform = translate;
-        }
-      });
-    }
+    let element = document.getElementById(this.activeTableItem);
+    element.addEventListener('scroll', function() {
+      var translate = 'translate(0,' + this.scrollTop + 'px)';
+      var myElements = this.querySelectorAll('thead');
+      for (var i = 0; i < myElements.length; i++) {
+        myElements[i].style.transform = translate;
+      }
+    });
   }
 
   setActivePeriod(pe) {
     this.activeTableItem = pe;
+    this.validationDimensions = createValidationDimensions(
+      this.organisationUnits,
+      this.activeTableItem,
+      getValidationRulesIds(this.validationRules)
+    );
+    this.store.dispatch(
+      loadValidationData({
+        dataDimensions: this.validationDimensions,
+        validationRules: this.validationRules,
+        keyForCheckingLoadedDimensions:
+          this.activeTableItem +
+          '-' +
+          getValidationRulesIds(this.validationRules).join('-')
+      })
+    );
+    this.validationEntities$ = this.store.select(getValidationDataEntities);
     return pe;
   }
 
@@ -52,15 +101,18 @@ export class DataQualityTableComponent implements OnInit, AfterViewInit {
     }
   }
 
-  splitExpressionToGetDataElements(expression) {
-    return expression
-      .replace(/#/g, '')
-      .replace(/{/g, '')
-      .replace(/}/g, '')
-      .replace(/\(/g, '+')
-      .replace(/\)/g, '+')
-      .replace(/\-/g, '+')
-      .replace(/\*/g, '+');
+  getDetails(e, key, header) {
+    e.stopPropagation();
+    this.validationEntities$.subscribe(entities => {
+      if (entities) {
+        this.validationDetails = {
+          data: entities[key]['validationData'],
+          validationRule: header['validationRule']
+        };
+        this.showValidationRuleViolations = true;
+      }
+    });
+    this.formattedPeriod = this.getFormatedDate(this.activeTableItem);
   }
 
   showValidationRuleViolationModal(e) {
@@ -68,89 +120,9 @@ export class DataQualityTableComponent implements OnInit, AfterViewInit {
   }
 
   hideValidationModal() {
-    if (this.selectedOuForViolations == true) {
+    console.log('clicked');
+    if (this.showValidationRuleViolations == true) {
       this.showValidationRuleViolations = false;
-    }
-  }
-
-  removeSpecialChars(expression) {
-    return expression
-      .replace(/#/g, '')
-      .replace(/{/g, '')
-      .replace(/}/g, '')
-      .replace(/\(/g, '')
-      .replace(/\)/g, '');
-  }
-
-  getViolationFromStoredViolations(rules, violations, ou, itemIdentifier, pe) {
-    for (let count = 0; count < rules.length; count++) {
-      if (
-        violations[rules[count].id + '-' + ou + '-' + itemIdentifier + '-' + pe]
-      ) {
-        return 'fail';
-        break;
-      }
-    }
-    return 'test';
-  }
-
-  getCountOfVilatedRules(violatedRules) {
-    if (violatedRules) {
-      return Object.keys(violatedRules).length;
-    } else {
-      return 0;
-    }
-  }
-
-  getApplicableValidationRules(validationRules, item) {
-    let applicableRules = [];
-    _.map(validationRules, rule => {
-      if (
-        _.indexOf(
-          rule.leftSide.expression + '+' + rule.rightSide.expression,
-          item
-        ) > -1
-      ) {
-        applicableRules.push(rule);
-      }
-    });
-    return applicableRules;
-  }
-
-  showValidationStatus(
-    allData,
-    itemIdentifier,
-    rules,
-    pe,
-    ou,
-    selectedTableObject,
-    violationMessage
-  ) {
-    if (this.showValidationRuleViolations) {
-      this.showValidationRuleViolations = false;
-    } else {
-      this.possibleViolatedRules = [];
-      this.selectedTableObject = selectedTableObject;
-      this.selectedOuForViolations = ou;
-      let violatedRulesIds = [];
-      _.map(
-        Object.keys(selectedTableObject.validationViolations.violatedRules),
-        key => {
-          if (key.indexOf(pe) > -1) {
-            this.possibleViolatedRules.push(key);
-          }
-        }
-      );
-      rules.forEach(rule => {
-        if (_.indexOf(violatedRulesIds, rule.id) > -1) {
-          this.possibleViolatedRules.push(rule);
-        }
-      });
-      if (violationMessage == 'fail') {
-        this.showValidationRuleViolations = true;
-      } else {
-        this.showValidationRuleViolations = false;
-      }
     }
   }
 }

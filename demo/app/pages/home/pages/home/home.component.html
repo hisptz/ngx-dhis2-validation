@@ -1,6 +1,7 @@
 <div style="margin-top: 20px">
   <h2 style="text-align: center">Welcome to DHIS2 Data Validation Demo</h2>
   <div *ngIf="indicator">
+    {{ analyticsPeriods | json }}
     <ngx-data-validation
       [indicator]="indicator"
       [validationRules]="validationRules"
@@ -10,11 +11,12 @@
       [period]="period"
       [dateDictionary]="dateDictionary"
       [indicatorDataElements]="indicatorDataElements"
-      [analyticsPeriods]="analyticsPeriods"
+      [validationPeriods]="analyticsPeriods"
       [marginTopViolation]="marginTopViolation"
       [violationBgrColor]="violationBgrColor"
       [discrepancyBgrColor]="discrepancyBgrColor"
       [successBgrColor]="successBgrColor"
+      [currentValidationPeriod]="currentValidationPeriod"
     ></ngx-data-validation>
   </div>
 </div>

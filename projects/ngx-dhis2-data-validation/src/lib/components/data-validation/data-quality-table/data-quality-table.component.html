@@ -1,8 +1,4 @@
-<div
-  class="data-quality-table"
-  *ngIf="tableObjectsList"
-  (click)="hideValidationModal()"
->
+<div class="data-quality-table" (click)="hideValidationModal()">
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" *ngFor="let pe of periods">
       <a
@@ -16,16 +12,8 @@
         *ngIf="getFormatedDate(pe)"
         style="cursor: pointer; font-size: 1rem;"
       >
-        {{ getFormatedDate(pe).period }}
-        <span
-          *ngIf="
-            tableObjectsList[pe] &&
-            tableObjectsList[pe]['validationViolations'] &&
-            tableObjectsList[pe]['validationViolations'][
-              'violatedRulesCount'
-            ] == 0
-          "
-        >
+        {{ getFormatedDate(pe)['period'] }}
+        <span *ngIf="">
           <img
             height="20px"
             style="margin-top: -6px"
@@ -38,21 +26,160 @@
           padding: 2px 6px;
           border-radius: 40px;
           background-color: #ff4c17;"
-          *ngIf="
-            tableObjectsList[pe] &&
-            tableObjectsList[pe]['validationViolations'] &&
-            tableObjectsList[pe]['validationViolations']['violatedRulesCount'] >
-              0
-          "
-          >{{
-            tableObjectsList[pe]['validationViolations']['violatedRulesCount']
-          }}</span
+          *ngIf=""
         >
+          <!-- {{
+            tableObjectsList[pe]['validationViolations']['violatedRulesCount']
+          }} -->
+        </span>
       </a>
     </li>
   </ul>
+  <!-- {{ validationEntities$ | async | json }} -->
+  <div
+    *ngIf="validationEntities$ | async"
+    class="table-with-fixed-header"
+    id="{{ activeTableItem }}"
+  >
+    <table class="table table-bordered table-striped" style="width: 100%">
+      <thead style="background-color: #f7f7f7">
+        <tr>
+          <th style="text-align: left; width: 200px!important;">
+            Validation Rules
+          </th>
+          <th
+            style="text-align: center;"
+            colspan="2"
+            *ngFor="let rulesHeader of headers[activeTableItem]['rules']"
+          >
+            {{ rulesHeader.name }}
+          </th>
+        </tr>
+        <tr>
+          <th style="text-align: left; width: 200px!important;">
+            Organisation Unit / Elements
+          </th>
+          <th
+            style="min-width: 300px"
+            *ngFor="let header of headers[activeTableItem]['dataReferences']"
+          >
+            {{ header.name }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let orgUnit of organisationUnits">
+          <td style="text-align: left; width: 180px;">{{ orgUnit.name }}</td>
+          <ng-template
+            ngFor
+            let-header
+            [ngForOf]="headers[activeTableItem]['dataReferences']"
+          >
+            <td
+              (click)="
+                getDetails(
+                  $event,
+                  header.fetchingIdPart + '-' + orgUnit['id'],
+                  header
+                )
+              "
+              style="cursor: pointer; text-align: center"
+              *ngIf="header.left"
+              [ngStyle]="{
+                'background-color': ((validationEntities$ | async)[
+                  header.fetchingIdPart + '-' + orgUnit['id']
+                ]?.validationData)['leftSide']['violated']
+                  ? violationBgrColor
+                  : 'transparent'
+              }"
+            >
+              <span
+                *ngIf="
+                  ((validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]?.validationData)['leftSide']['value'] > 0
+                "
+              >
+                {{
+                  ((validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]?.validationData)['leftSide']['value']
+                }}
+              </span>
+              <span
+                *ngIf="
+                  ((validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]?.validationData)['leftSide']['value'] == 0
+                "
+              >
+              </span
+              ><span
+                *ngIf="
+                  !(validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]
+                "
+              >
+                <app-loader></app-loader>
+              </span>
+            </td>
+            <td
+              (click)="
+                getDetails(
+                  $event,
+                  header.fetchingIdPart + '-' + orgUnit['id'],
+                  header
+                )
+              "
+              style="cursor: pointer; text-align: center"
+              *ngIf="header.right"
+              [ngStyle]="{
+                'background-color': ((validationEntities$ | async)[
+                  header.fetchingIdPart + '-' + orgUnit['id']
+                ]?.validationData)['leftSide']['violated']
+                  ? violationBgrColor
+                  : 'transparent'
+              }"
+            >
+              <span
+                *ngIf="
+                  ((validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]?.validationData)['rightSide']['value'] > 0
+                "
+              >
+                {{
+                  ((validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]?.validationData)['rightSide']['value']
+                }}
+              </span>
+              <span
+                *ngIf="
+                  ((validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]?.validationData)['rightSide']['value'] == 0
+                "
+              >
+              </span>
+              <span
+                *ngIf="
+                  !(validationEntities$ | async)[
+                    header.fetchingIdPart + '-' + orgUnit['id']
+                  ]
+                "
+              >
+                <app-loader></app-loader
+              ></span>
+            </td>
+          </ng-template>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <div class="tab-content" id="myTabContent">
+  <!-- <div class="tab-content" id="myTabContent">
     <div
       class="tab-pane fade show"
       *ngFor="let pe of periods"
@@ -150,20 +277,6 @@
                               </text>
                             </svg>
                           </span>
-                          <!-- Discrepancy -->
-                          <!-- <span
-                                        class="inconstistance-bground"
-                                        style="width: 20px;"
-                                      >
-                                        <svg
-                                          viewbox="0 0 20 20"
-                                          width="20"
-                                          height="20"
-                                          ng-if="indicator.values.length > 0"
-                                        >
-                                          <polygon points="0 0 20 20" fill="#e7ea31" />
-                                        </svg>
-                                      </span> -->
                         </div>
                       </td>
                       <td
@@ -212,15 +325,14 @@
         </div>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>
 
 <div *ngIf="showValidationRuleViolations">
   <app-validation-rule-violation
     [marginTop]="marginTopViolation"
-    [allData]="selectedTableObject"
-    [selectedOuForViolations]="selectedOuForViolations"
-    [period]="activeTableItem"
+    [validationDetails]="validationDetails"
+    [period]="formattedPeriod"
     (showValidationRuleViolationModal)="
       showValidationRuleViolationModal($event)
     "

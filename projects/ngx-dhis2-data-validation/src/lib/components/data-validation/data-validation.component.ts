@@ -4,7 +4,9 @@ import { Store } from '@ngrx/store';
 
 import { createValidationDimensions } from '../../helpers';
 import { ValidationDataState } from '../../store/states/data-validation.states';
-import { loadValidationData } from '../../store/actions';
+import { loadValidationData, loadValidationRules } from '../../store/actions';
+import { Observable } from 'rxjs';
+import { getLoadedValidationRules } from '../../store/selectors/data-validation.selectors';
 
 @Component({
   selector: 'ngx-data-validation',
@@ -19,7 +21,8 @@ export class DataValidationComponent implements OnInit {
   @Input() indicatorDataElements: any;
   @Input() childrenOus: any;
   @Input() parentOu: any;
-  @Input() analyticsPeriods: any;
+  @Input() validationPeriods: any;
+  @Input() currentValidationPeriod: any;
   @Input() period: any;
   @Input() dataElementsDataDimensions: Array<any> = [];
   @Input() dateDictionary: any;
@@ -28,19 +31,21 @@ export class DataValidationComponent implements OnInit {
   @Input() discrepancyBgrColor: string;
   @Input() successBgrColor: string;
   validationDimensions: Array<any> = [];
+  validationRules$: Observable<any>;
   constructor(private store: Store<ValidationDataState>) {}
 
   ngOnInit() {
-    if (this.analyticsPeriods && this.childrenOus) {
-      console.log(this.validationRules);
+    if (this.validationPeriods && this.childrenOus) {
+      // Create dimensions for loading data for the current period
       this.validationDimensions = createValidationDimensions(
         this.childrenOus,
-        this.analyticsPeriods,
+        this.currentValidationPeriod,
         this.validationRules
       );
       this.store.dispatch(
-        loadValidationData({ dataDimensions: this.validationDimensions })
+        loadValidationRules({ validationRulesIds: this.validationRules })
       );
+      this.validationRules$ = this.store.select(getLoadedValidationRules);
     }
   }
 }

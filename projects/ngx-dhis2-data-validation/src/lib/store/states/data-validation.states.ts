@@ -1,12 +1,17 @@
 import { EntityState, createEntityAdapter, EntityAdapter } from '@ngrx/entity';
 
 export interface ValidationDataState extends EntityState<any> {
-  loading: Boolean;
-  loaded: Boolean;
-  hasError: Boolean;
+  loading: boolean;
+  loaded: boolean;
+  hasError: boolean;
   countOfLoadedDataAnalysis: number;
   expectedCount: number;
   error: any;
+  validationRules: Array<any>;
+  loadingValidationRules: boolean;
+  loadedValidationRules: boolean;
+  validationRuleLoadingError: any;
+  keysForCheckingLoadedDimensions: Array<string>;
 }
 
 export const validationDataAdapter: EntityAdapter<any> = createEntityAdapter<
@@ -20,6 +25,11 @@ export const initialDataElementsAnalyticsState = validationDataAdapter.getInitia
     hasError: false,
     countOfLoadedDataAnalysis: 0,
     expectedCount: 0,
-    error: null
+    error: null,
+    validationRules: [],
+    loadingValidationRules: false,
+    loadedValidationRules: false,
+    validationRuleLoadingError: null,
+    keysForCheckingLoadedDimensions: []
   }
 );

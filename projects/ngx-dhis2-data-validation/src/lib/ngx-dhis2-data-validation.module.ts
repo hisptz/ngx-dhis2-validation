@@ -26,7 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     HttpClientModule,
     MatProgressBarModule,
-    StoreModule.forFeature('validationData', validationDataReducer),
+    StoreModule.forFeature('validationInfo', validationDataReducer),
     EffectsModule.forFeature([ValidationDataEffects])
   ],
   exports: [DataValidationComponent, MatProgressBarModule]
