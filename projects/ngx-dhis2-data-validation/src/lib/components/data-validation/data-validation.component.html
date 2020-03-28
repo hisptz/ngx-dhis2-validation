@@ -5,30 +5,11 @@
     [successBgrColor]="successBgrColor ? successBgrColor : 'green'"
   ></app-legend>
 </div>
-<div
-  *ngIf="
-    ((analyticsDone$ | async) / (expectedAnalyticsCount$ | async)) * 100 < 100
-  "
->
-  <span style="float: right; font-weight: 600"
-    >Loading
-    {{
-      ((analyticsDone$ | async) / (expectedAnalyticsCount$ | async)) * 100
-        | number: '1.0-0'
-    }}
-    %</span
-  >
-  <mat-progress-bar
-    mode="determinate"
-    value="{{
-      ((analyticsDone$ | async) / (expectedAnalyticsCount$ | async)) * 100
-    }}"
-  ></mat-progress-bar>
-</div>
 
 <div
   *ngIf="
-    ((analyticsDone$ | async) / (expectedAnalyticsCount$ | async)) * 100 < 25
+    !(validationRules$ | async) ||
+    ((validationRules$ | async) && (validationRules$ | async).length == 0)
   "
 >
   <div
