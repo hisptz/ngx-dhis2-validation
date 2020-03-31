@@ -1,7 +1,8 @@
 import {
   MemoizedSelector,
   createFeatureSelector,
-  createSelector
+  createSelector,
+  props
 } from '@ngrx/store';
 import {
   ValidationDataState,
@@ -36,4 +37,10 @@ export const getLoadedValidationRules = createSelector(
 export const getDimensionsForLoadedData = createSelector(
   getValidationDataState,
   (state: ValidationDataState) => state.keysForCheckingLoadedDimensions
+);
+
+export const getPercentageOfLoadedDataByPeriodId = createSelector(
+  getValidationDataState,
+  (state: ValidationDataState, props: any) =>
+    state.percentOfLoadedData[props.id]
 );
