@@ -37,6 +37,11 @@ export class DataValidationComponent implements OnInit {
   ngOnInit() {
     if (this.validationPeriods && this.childrenOus) {
       // Create dimensions for loading data for the current period
+      console.log(
+        this.validationRules,
+        this.validationPeriods,
+        this.childrenOus
+      );
       this.validationDimensions = createValidationDimensions(
         this.childrenOus,
         this.currentValidationPeriod,
