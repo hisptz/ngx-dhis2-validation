@@ -10,7 +10,8 @@ import {
   loadValidationRules,
   addLoadedValidationRules,
   loadingValidationRulesFail,
-  addDimensionsForLoadedData
+  addDimensionsForLoadedData,
+  addPercentLoadedData
 } from '../actions';
 
 export const reducer = createReducer(
@@ -62,6 +63,13 @@ export const reducer = createReducer(
     loadingValidationRules: false,
     loadedValidationRules: true,
     validationRuleLoadingError: error
+  })),
+  on(addPercentLoadedData, (state, { percentOfLoadedData }) => ({
+    ...state,
+    percentOfLoadedData: {
+      ...state.percentOfLoadedData,
+      ...percentOfLoadedData
+    }
   }))
 );
 

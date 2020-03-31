@@ -37,3 +37,8 @@ export const loadingValidationDataFail = createAction(
   '[Validation data] loading data for validation failed',
   props<{ error: any }>()
 );
+
+export const addPercentLoadedData = createAction(
+  '[Validation data] add percentage of loaded data',
+  props<{ percentOfLoadedData: any }>()
+);

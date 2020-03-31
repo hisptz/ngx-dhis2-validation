@@ -17,7 +17,8 @@ import {
   loadValidationRules,
   addLoadedValidationRules,
   loadingValidationRulesFail,
-  addDimensionsForLoadedData
+  addDimensionsForLoadedData,
+  addPercentLoadedData
 } from '../actions';
 import { ValidationDataService } from '../../services/validation-data.service';
 import { Store } from '@ngrx/store';
@@ -53,6 +54,8 @@ export class ValidationDataEffects {
             loadedDimensions.indexOf(action.keyForCheckingLoadedDimensions) ==
             -1
           ) {
+            let loadedDataCount = 0;
+            const expectedDataToLoad = action.dataDimensions.length;
             const countOfIntervals = interval(2000);
             this.store.dispatch(
               addDimensionsForLoadedData({
@@ -66,6 +69,12 @@ export class ValidationDataEffects {
                     action.dataDimensions.slice(4 * count, 4 * (count + 1))
                   )
                   .subscribe(data => {
+                    let percentObject = {};
+                    loadedDataCount += 1;
+                    const percentOfLoadedData =
+                      (loadedDataCount / expectedDataToLoad) * 100;
+                    const key = data.id.split('-')[1];
+                    percentObject[key] = percentOfLoadedData;
                     const formattedViolationData = createValidationObject(
                       action.validationRules,
                       data
@@ -73,6 +82,11 @@ export class ValidationDataEffects {
                     this.store.dispatch(
                       addLoadedDataForValidation({
                         data: formattedViolationData
+                      })
+                    );
+                    this.store.dispatch(
+                      addPercentLoadedData({
+                        percentOfLoadedData: percentObject
                       })
                     );
                   });

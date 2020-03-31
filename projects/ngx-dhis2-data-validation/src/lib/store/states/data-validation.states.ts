@@ -12,6 +12,7 @@ export interface ValidationDataState extends EntityState<any> {
   loadedValidationRules: boolean;
   validationRuleLoadingError: any;
   keysForCheckingLoadedDimensions: Array<string>;
+  percentOfLoadedData: any;
 }
 
 export const validationDataAdapter: EntityAdapter<any> = createEntityAdapter<
@@ -30,6 +31,7 @@ export const initialDataElementsAnalyticsState = validationDataAdapter.getInitia
     loadingValidationRules: false,
     loadedValidationRules: false,
     validationRuleLoadingError: null,
-    keysForCheckingLoadedDimensions: []
+    keysForCheckingLoadedDimensions: [],
+    percentOfLoadedData: {}
   }
 );
