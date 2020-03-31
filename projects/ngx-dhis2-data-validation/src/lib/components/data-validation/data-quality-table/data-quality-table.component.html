@@ -1,4 +1,19 @@
 <div class="data-quality-table" (click)="hideValidationModal()">
+  <div
+    *ngIf="
+      (percentOfLoadedDataEntities$ | async) &&
+      (percentOfLoadedDataEntities$ | async)[activeTableItem] &&
+      (percentOfLoadedDataEntities$ | async)[activeTableItem] < 100
+    "
+  >
+    <mat-progress-bar
+      mode="determinate"
+      value="{{ (percentOfLoadedDataEntities$ | async)[activeTableItem] }}"
+    ></mat-progress-bar>
+  </div>
+  <div *ngIf="!(percentOfLoadedDataEntities$ | async)[activeTableItem]">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </div>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
     <li class="nav-item" *ngFor="let pe of periods">
       <a

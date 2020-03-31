@@ -5,7 +5,11 @@ import { Store } from '@ngrx/store';
 import { ValidationDataState } from '../../../store/states/data-validation.states';
 import { loadValidationData } from '../../../store/actions';
 import { Observable } from 'rxjs';
-import { getValidationDataEntities } from '../../../store/selectors/data-validation.selectors';
+import {
+  getValidationDataEntities,
+  getPercentageOfLoadedDataByPeriodId,
+  getInfoForPercentOfLoadedData
+} from '../../../store/selectors/data-validation.selectors';
 import {
   createValidationHeaders,
   getValidationRulesIds,
@@ -36,6 +40,7 @@ export class DataQualityTableComponent implements OnInit, AfterViewInit {
   validationEntities$: Observable<any>;
   headers: any;
   formattedPeriod: any;
+  percentOfLoadedDataEntities$: Observable<number>;
   constructor(private store: Store<ValidationDataState>) {}
 
   ngOnInit() {
@@ -56,6 +61,9 @@ export class DataQualityTableComponent implements OnInit, AfterViewInit {
         })
       );
       this.validationEntities$ = this.store.select(getValidationDataEntities);
+      this.percentOfLoadedDataEntities$ = this.store.select(
+        getInfoForPercentOfLoadedData
+      );
     }
   }
 

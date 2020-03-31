@@ -100,6 +100,122 @@ export class HomeComponent implements OnInit {
       {
         name: 'Okoa Dispensary',
         id: 'FxkvwFQBteg'
+      },
+      {
+        name: 'Eben Dispensary',
+        id: 'MGRNfzaj2NR'
+      },
+      {
+        name: 'Olorieni Dispensary',
+        id: 'uQ6AEPLq1W0'
+      },
+      {
+        name: 'FM Health Care Level IA2 (Dispensary Laboratory)',
+        id: 'P2Nm5FKYzVn'
+      },
+      {
+        name: 'Upendo Dispensary',
+        id: 'hh0mrmZ1Viq'
+      },
+      {
+        name: 'Sakina Dispensary',
+        id: 'y3BwWgEBHD4'
+      },
+      {
+        name: 'ash Health Labs',
+        id: 'YbJIrQInY0v'
+      },
+      {
+        name: 'JOBI Dispensary',
+        id: 'jUpCI4ul5kN'
+      },
+      {
+        name: 'KAM MED Dispensary',
+        id: 'FwGAWe7EO3z'
+      },
+      {
+        name: 'Kimandolu Dispensary',
+        id: 'pK5FsujmLPf'
+      },
+      {
+        name: 'meserani Health Labs',
+        id: 'qeuUQYiDbq5'
+      },
+      {
+        name: 'Tahfifu Level IA2 (Dispensary Laboratory)',
+        id: 'mt2tp7QRLQR'
+      },
+      {
+        name: 'Sanawari Dispensary',
+        id: 'ueA5e1VANsu'
+      },
+      {
+        name: 'Vision Perfect Limited Optometry Clinic',
+        id: 'DFAZ8676wy4'
+      },
+      {
+        name: 'Smart Dental Clinic',
+        id: 'FyUzlX9lEl3'
+      },
+      {
+        name: 'Themi Health Center',
+        id: 'DmmzYQSSqeS'
+      },
+      {
+        name: 'Well Point Dispensary',
+        id: 'R7gKjuhTRrV'
+      },
+      {
+        name: 'Smart Level IA2 (Dispensary Laboratory)',
+        id: 'xIujEjtKZBA'
+      },
+      {
+        name: 'Tumaini VCT Clinic',
+        id: 'pChM6mlXt73'
+      },
+      {
+        name: 'Upone Charitable Foundation Dispensary',
+        id: 'QW1IRLgfxLd'
+      },
+      {
+        name: 'Wanjiro Level IA2 (Dispensary Laboratory)',
+        id: 'G9w0Sc0VKuW'
+      },
+      {
+        name: 'Highway Dispensary',
+        id: 'FDpsVCkyrtX'
+      },
+      {
+        name: 'Agape Level IA2 (Dispensary Laboratory)',
+        id: 'GlZ96ikDzX9'
+      },
+      {
+        name: 'Moshono Dispensary',
+        id: 'yxDguaBESrz'
+      },
+      {
+        name: 'Holy Family Dispensary',
+        id: 'IDW9Eez19K6'
+      },
+      {
+        name: 'Mother Medical Care Health Center',
+        id: 'hbeiD77AQxs'
+      },
+      {
+        name: 'Muriet Health Center',
+        id: 'NS7bHDbwDGU'
+      },
+      {
+        name: 'Qube Level IA2 (Dispensary Laboratory)',
+        id: 'Nr6aPjFfVYV'
+      },
+      {
+        name: 'Shamsi Level IA2 (Dispensary Laboratory)',
+        id: 'GWmLIRuCV0b'
+      },
+      {
+        name: 'arusha centre Health Labs',
+        id: 'ctZkJXqHU2e'
       }
     ];
   }

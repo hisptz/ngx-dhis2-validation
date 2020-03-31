@@ -44,3 +44,8 @@ export const getPercentageOfLoadedDataByPeriodId = createSelector(
   (state: ValidationDataState, props: any) =>
     state.percentOfLoadedData[props.id]
 );
+
+export const getInfoForPercentOfLoadedData = createSelector(
+  getValidationDataState,
+  (state: ValidationDataState) => state.percentOfLoadedData
+);
