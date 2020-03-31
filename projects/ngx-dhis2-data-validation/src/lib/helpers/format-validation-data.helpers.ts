@@ -10,29 +10,12 @@ export function createValidationObject(validationRules, data) {
   let leftSideValue = 0;
   let rightSideValue = 0;
   const formulaPattern = /#\{.+?\}/g;
-  _.map(
-    validationRulesInKeyValuePair[
-      data.id.split('-')[0]
-    ].leftSide.expression.match(formulaPattern),
-    (matchedItem, index) => {
-      // leftSideElements.push(matchedItem.replace(/[#\{\}]/g, ''));
-      leftSideValue += data['data']['leftSide'][index]['value']
-        ? parseFloat(data['data']['leftSide'][index]['value'])
-        : 0;
-    }
-  );
-  _.map(
-    validationRulesInKeyValuePair[
-      data.id.split('-')[0]
-    ].rightSide.expression.match(formulaPattern),
-    (matchedItem, index) => {
-      rightSideValue += data['data']['rightSide'][index]['value']
-        ? parseFloat(data['data']['rightSide'][index]['value'])
-        : 0;
-    }
-  );
-  //   leftSideValue = leftSideValue > 0 ? leftSideValue : '';
-  //   rightSideValue = rightSideValue > 0 ? rightSideValue : '';
+  _.map(data['data']['leftSide'], (item, index) => {
+    leftSideValue += item['value'] ? parseFloat(item['value']) : 0;
+  });
+  _.map(data['data']['rightSide'], (item, index) => {
+    rightSideValue += item['value'] ? parseFloat(item['value']) : 0;
+  });
 
   if (
     validationRulesInKeyValuePair[data.id.split('-')[0]]['operator'] ==
