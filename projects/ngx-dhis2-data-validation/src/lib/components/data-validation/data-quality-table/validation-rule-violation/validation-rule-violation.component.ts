@@ -1,7 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import * as _ from 'lodash';
 import { operators } from '../../../../constants';
-import { dateDictionary } from '../../../../constants';
 
 @Component({
   selector: 'app-validation-rule-violation',

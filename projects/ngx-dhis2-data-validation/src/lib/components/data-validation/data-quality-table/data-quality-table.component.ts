@@ -120,7 +120,6 @@ export class DataQualityTableComponent implements OnInit, AfterViewInit {
   }
 
   hideValidationModal() {
-    console.log('clicked');
     if (this.showValidationRuleViolations == true) {
       this.showValidationRuleViolations = false;
     }
