@@ -1,5 +1,6 @@
 <div class="data-quality-table" (click)="hideValidationModal()">
   <div
+    style="margin: 2px !important"
     *ngIf="
       (percentOfLoadedDataEntities$ | async) &&
       (percentOfLoadedDataEntities$ | async)[activeTableItem] &&
@@ -11,7 +12,10 @@
       value="{{ (percentOfLoadedDataEntities$ | async)[activeTableItem] }}"
     ></mat-progress-bar>
   </div>
-  <div *ngIf="!(percentOfLoadedDataEntities$ | async)[activeTableItem]">
+  <div
+    style="margin: 2px !important"
+    *ngIf="!(percentOfLoadedDataEntities$ | async)[activeTableItem]"
+  >
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </div>
   <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -57,8 +61,8 @@
     id="{{ activeTableItem }}"
   >
     <table class="table table-bordered table-striped" style="width: 100%">
-      <thead style="background-color: #f7f7f7">
-        <tr>
+      <thead style="background-color: #f7f7f7;">
+        <tr style="z-index: 10000">
           <th style="text-align: left; width: 200px!important;">
             Validation Rules
           </th>
